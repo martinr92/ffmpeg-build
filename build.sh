@@ -6,7 +6,8 @@ export FF_OUT="$FF_ROOT/ffout"
 mkdir "$FF_OUT"
 
 # override ff-version for snapshot build
-if [ "$TRAVIS_EVENT_TYPE" = "cron" ] then
+if [ "$TRAVIS_EVENT_TYPE" = "cron" ]
+then
     export FF_VERSION=snapshot
     echo "set snapshot version"
 fi
