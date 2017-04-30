@@ -9,6 +9,13 @@ This repository builds ffmpeg, ffprobe and ffserver for Mac OSX using
 - [YASM 1.3.0](http://yasm.tortall.net/)
 - [x264](http://www.videolan.org/developers/x264.html)
 
+## archive
+The created archive contains following data:
+- bin (binary files like ffmpeg, ffprobe and ffserver)
+- include (header files)
+- lib (libraries like libavcodec.a, libavfilter.a and libavformat.a)
+- share (documentation and sample code)
+
 ## execution
 Following environment variables must be set before executing:
 - FF_ROOT = empty directory for the whole content
