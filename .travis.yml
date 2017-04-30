@@ -2,8 +2,8 @@ language: c
 
 os: osx
 
-env: FF_ROOT=$TRAVIS_BUILD_DIR
+env: FF_ROOT=$TRAVIS_BUILD_DIR FF_VERSION=3.3
 
 script: ./build.sh
 
-after_success: curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-3.3.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/build/osx/ffmpeg-3.3.zip
+after_success: curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-$FF_VERSION.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/build/osx/ffmpeg-${FF_VERSION}_`date +%Y%m%d`.zip

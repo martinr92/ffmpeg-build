@@ -5,6 +5,12 @@ mkdir "$FF_SOURCE"
 export FF_OUT="$FF_ROOT/ffout"
 mkdir "$FF_OUT"
 
+# override ff-version for snapshot build
+if [ "$TRAVIS_EVENT_TYPE" = "cron" ] then
+    export FF_VERSION=snapshot
+    echo "set snapshot version"
+fi
+
 # download and install yasm
 echo "start downloading yasm..."
 export FF_OUT_YASM="$FF_OUT/yasm"
@@ -20,10 +26,10 @@ export PATH="$FF_OUT_YASM/bin:$PATH"
 # download ffmpeg
 echo "start downloading ffmpeg..."
 cd "$FF_SOURCE"
-curl -O https://ffmpeg.org/releases/ffmpeg-3.3.tar.bz2
-bunzip2 ffmpeg-3.3.tar.bz2
-tar -vxf ffmpeg-3.3.tar
-export FFMPEG_SOURCE="$FF_SOURCE/ffmpeg-3.3"
+curl -O https://ffmpeg.org/releases/ffmpeg-$FF_VERSION.tar.bz2
+bunzip2 ffmpeg-$FF_VERSION.tar.bz2
+tar -vxf ffmpeg-$FF_VERSION.tar
+export FFMPEG_SOURCE="$FF_SOURCE/ffmpeg-$FF_VERSION"
 
 # build ffmpeg
 echo "start build process..."
@@ -33,4 +39,4 @@ make
 make install
 
 # pack data
-zip -9 -r "$FF_ROOT/ffmpeg-3.3.zip" "$FF_OUT"
+zip -9 -r "$FF_ROOT/ffmpeg-$FF_VERSION.zip" "$FF_OUT"
