@@ -39,5 +39,9 @@ cd "$FFMPEG_SOURCE"
 make
 make install
 
+# clean up
+rm -R "$FF_OUT_YASM"
+
 # pack data
-zip -9 -r "$FF_ROOT/ffmpeg-$FF_VERSION.zip" "$FF_OUT"
+cd "$FF_OUT"
+zip -9 -r "$FF_ROOT/ffmpeg-$FF_VERSION.zip" *
