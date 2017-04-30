@@ -1,7 +1,9 @@
-# set some environment variables
+# set some paths and environment variables
 echo "use FF_ROOT = $FF_ROOT"
 export FF_SOURCE="$FF_ROOT/ffsource"
+mkdir "$FF_SOURCE"
 export FF_OUT="$FF_ROOT/ffout"
+mkdir "$FF_OUT"
 
 # download and install yasm
 echo "start downloading yasm..."
