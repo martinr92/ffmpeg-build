@@ -13,6 +13,7 @@ mkdir "$FF_SOURCE_YASM"
 cd "$FF_SOURCE_YASM"
 curl -O http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz
 tar -zxf yasm-1.3.0.tar.gz
+cd "$FF_SOURCE_YASM/yasm-1.3.0"
 ./configure --prefix="$FF_OUT_YASM"
 make
 make install
