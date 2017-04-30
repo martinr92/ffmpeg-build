@@ -14,7 +14,7 @@ fi
 
 # download and install yasm
 echo "start downloading yasm..."
-export FF_OUT_YASM="$FF_OUT/yasm"
+export FF_OUT_YASM="$FF_ROOT/yasm"
 cd "$FF_SOURCE"
 curl -O http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz
 tar -zxf yasm-1.3.0.tar.gz
@@ -23,6 +23,17 @@ cd "yasm-1.3.0"
 make
 make install
 export PATH="$FF_OUT_YASM/bin:$PATH"
+
+# download and build x264
+echo "start downloading x264..."
+cd "$FF_SOURCE"
+curl -O ftp://ftp.videolan.org/pub/x264/snapshots/last_x264.tar.bz2
+bunzip2 last_x264.tar.bz2
+tar -xf last_x264.tar
+cd x264*
+./configure --prefix="$FF_OUT" --enable-static
+make
+make install
 
 # download ffmpeg
 echo "start downloading ffmpeg..."
@@ -34,13 +45,13 @@ export FFMPEG_SOURCE="$FF_SOURCE/ffmpeg-$FF_VERSION"
 
 # build ffmpeg
 echo "start build process..."
+export FF_FLAGS="-L${FF_OUT}/lib -I${FF_OUT}/include" 
+export LDFLAGS="$FF_FLAGS" 
+export CFLAGS="$FF_FLAGS"
 cd "$FFMPEG_SOURCE"
-./configure --prefix="$FF_OUT"
+./configure --prefix="$FF_OUT" --enable-gpl --enable-libx264
 make
 make install
-
-# clean up
-rm -R "$FF_OUT_YASM"
 
 # pack data
 cd "$FF_OUT"

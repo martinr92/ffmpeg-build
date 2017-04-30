@@ -1,9 +1,13 @@
 # ffmpeg-build
 [![Build Status](https://travis-ci.org/martinr92/ffmpeg-build.svg?branch=master)](https://travis-ci.org/martinr92/ffmpeg-build)
 
+## download
+If you not want to compile ffmpeg on yourself, download a successful build from [https://ffmpeg.martin-riedl.de/build/osx/](https://ffmpeg.martin-riedl.de/build/osx/).
+
 ## ffmpeg build for OSX
-This repository builds ffmpeg for Mac OSX using
-- YASM 1.3.0
+This repository builds ffmpeg, ffprobe and ffserver for Mac OSX using
+- [YASM 1.3.0](http://yasm.tortall.net/)
+- [x264](http://www.videolan.org/developers/x264.html)
 
 ## execution
 Following environment variables must be set before executing:
