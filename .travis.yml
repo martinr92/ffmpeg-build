@@ -1,0 +1,7 @@
+language: c
+
+os: osx
+
+env: FF_ROOT=TRAVIS_BUILD_DIR
+
+script: ./build.sh
