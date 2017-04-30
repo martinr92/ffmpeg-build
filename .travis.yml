@@ -5,3 +5,5 @@ os: osx
 env: FF_ROOT=$TRAVIS_BUILD_DIR
 
 script: ./build.sh
+
+after_success: curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-3.3.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/build/osx/ffmpeg-3.3.zip

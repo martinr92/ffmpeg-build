@@ -30,3 +30,6 @@ cd "$FFMPEG_SOURCE"
 ./configure --prefix="$FF_OUT"
 make
 make install
+
+# pack data
+zip -9 -r "$FF_ROOT/ffmpeg-3.3.zip" "$FF_OUT"
