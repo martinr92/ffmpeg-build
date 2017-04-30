@@ -17,7 +17,7 @@ echo "start downloading yasm..."
 export FF_OUT_YASM="$FF_OUT/yasm"
 cd "$FF_SOURCE"
 curl -O http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz
-tar -vzxf yasm-1.3.0.tar.gz
+tar -zxf yasm-1.3.0.tar.gz
 cd "yasm-1.3.0"
 ./configure --prefix="$FF_OUT_YASM"
 make
@@ -29,7 +29,7 @@ echo "start downloading ffmpeg..."
 cd "$FF_SOURCE"
 curl -O https://ffmpeg.org/releases/ffmpeg-$FF_VERSION.tar.bz2
 bunzip2 ffmpeg-$FF_VERSION.tar.bz2
-tar -vxf ffmpeg-$FF_VERSION.tar
+tar -xf ffmpeg-$FF_VERSION.tar
 export FFMPEG_SOURCE="$FF_SOURCE/ffmpeg-$FF_VERSION"
 
 # build ffmpeg
