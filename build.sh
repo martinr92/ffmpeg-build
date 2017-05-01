@@ -24,6 +24,18 @@ make
 make install
 export PATH="$FF_OUT_YASM/bin:$PATH"
 
+# download and install cmake
+echo "start downloading cmake"
+export FF_OUT_CMAKE="$FF_ROOT/cmake"
+cd "$FF_SOURCE"
+curl -O https://cmake.org/files/v3.8/cmake-3.8.0.tar.gz
+tar -zxf cmake-*
+cd cmake-*
+./configure --prefix="$FF_OUT_CMAKE"
+make
+make install
+export PATH="$FF_OUT_CMAKE/bin:$PATH"
+
 # download and build x264
 echo "start downloading x264..."
 cd "$FF_SOURCE"
@@ -32,6 +44,16 @@ bunzip2 last_x264.tar.bz2
 tar -xf last_x264.tar
 cd x264*
 ./configure --prefix="$FF_OUT" --enable-static
+make
+make install
+
+# download and build x265
+echo "start downloading x265..."
+cd "$FF_SOURCE"
+curl -O -L https://bitbucket.org/multicoreware/x265/downloads/x265_2.4.tar.gz
+tar -zxf x265_*
+cd x265_*
+cmake -DCMAKE_INSTALL_PREFIX:PATH=$FF_OUT source
 make
 make install
 
@@ -49,7 +71,7 @@ export FF_FLAGS="-L${FF_OUT}/lib -I${FF_OUT}/include"
 export LDFLAGS="$FF_FLAGS" 
 export CFLAGS="$FF_FLAGS"
 cd "$FFMPEG_SOURCE"
-./configure --prefix="$FF_OUT" --enable-gpl --enable-libx264
+./configure --prefix="$FF_OUT" --enable-gpl --enable-libx264 --enable-libx265
 make
 make install
 

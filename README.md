@@ -7,7 +7,9 @@ If you not want to compile ffmpeg on yourself, download a successful build from 
 ## ffmpeg build for OSX
 This repository builds ffmpeg, ffprobe and ffserver for Mac OSX using
 - [YASM 1.3.0](http://yasm.tortall.net/)
+- [cmake 3.8.0](https://cmake.org/)
 - [x264](http://www.videolan.org/developers/x264.html)
+- [x265 2.4](http://x265.org/)
 
 ## archive
 The created archive contains following data:
@@ -22,3 +24,13 @@ Following environment variables must be set before executing:
 - FF_VERSION = ffmpeg version (e.g. 3.3 or snapshot)
 
 After the build you find the FF_ROOT folder a ffmpeg-VERSION-DATE.zip file with all the compiled content (including binary files and libraries).
+
+Example
+```
+export FF_ROOT=/Users/martinriedl/Downloads/ffmpeg
+export FF_VERSION=3.3
+./build.sh
+```
+
+## Codec missing?
+Open an issue if you need a missing codec and I will add them soon.
