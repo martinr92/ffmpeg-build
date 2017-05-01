@@ -6,10 +6,11 @@ If you not want to compile ffmpeg on yourself, download a successful build from 
 
 ## ffmpeg build for OSX
 This repository builds ffmpeg, ffprobe and ffserver for Mac OSX using
-- [YASM 1.3.0](http://yasm.tortall.net/)
 - [cmake 3.8.0](https://cmake.org/)
+- [pkg-config 0.29.2](https://www.freedesktop.org/wiki/Software/pkg-config/)
 - [x264](http://www.videolan.org/developers/x264.html)
 - [x265 2.4](http://x265.org/)
+- [YASM 1.3.0](http://yasm.tortall.net/)
 
 ## archive
 The created archive contains following data:

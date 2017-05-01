@@ -104,6 +104,31 @@ cd x265_*
 cmake -DCMAKE_INSTALL_PREFIX:PATH=$FF_OUT -DENABLE_SHARED=NO source
 make
 make install
+# https://mailman.videolan.org/pipermail/x265-devel/2014-April/004227.html
+sed -i -e 's/lx265/lx265 -lstdc++/g' $FF_OUT/lib/pkgconfig/x265.pc
+
+# download pkg-config
+if [ "$TRAVIS" = "true" ]
+then
+    echo "travis_fold:start:pkg-config"
+fi
+echo "=== START pkg-config ==="
+export FF_OUT_PKG_CONFIG="$FF_ROOT/pkg-config"
+cd "$FF_SOURCE"
+curl -O https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
+
+# build pkg-config
+tar -zxf pkg-config-*
+cd pkg-config-*
+./configure --prefix="$FF_OUT_PKG_CONFIG" --with-pc-path="$FF_OUT/lib/pkgconfig" --with-internal-glib
+make
+make install
+export PATH="$FF_OUT_PKG_CONFIG/bin:$PATH"
+if [ "$TRAVIS" = "true" ]
+then
+    echo "travis_fold:end:pkg-config"
+fi
+echo "=== END pkg-config ==="
 
 # download ffmpeg
 echo "start downloading ffmpeg..."
