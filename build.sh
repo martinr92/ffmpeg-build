@@ -101,7 +101,7 @@ cd "$FF_SOURCE"
 curl -O -L https://bitbucket.org/multicoreware/x265/downloads/x265_2.4.tar.gz
 tar -zxf x265_*
 cd x265_*
-cmake -DCMAKE_INSTALL_PREFIX:PATH=$FF_OUT source
+cmake -DCMAKE_INSTALL_PREFIX:PATH=$FF_OUT -DENABLE_SHARED=NO source
 make
 make install
 
