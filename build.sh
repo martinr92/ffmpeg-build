@@ -44,11 +44,11 @@ cd yasm-*
 make
 make install
 export PATH="$FF_OUT_YASM/bin:$PATH"
+echo "=== END YASM ==="
 if [ "$TRAVIS" = "true" ]
 then
     echo "travis_fold:end:YASM"
 fi
-echo "=== END YASM ==="
 
 # download cmake
 if [ "$TRAVIS" = "true" ]
@@ -67,11 +67,11 @@ cd cmake-*
 make
 make install
 export PATH="$FF_OUT_CMAKE/bin:$PATH"
+echo "=== END CMAKE ==="
 if [ "$TRAVIS" = "true" ]
 then
     echo "travis_fold:end:CMAKE"
 fi
-echo "=== END CMAKE ==="
 
 # download x264
 if [ "$TRAVIS" = "true" ]
@@ -89,16 +89,22 @@ cd x264*
 ./configure --prefix="$FF_OUT" --enable-static
 make
 make install
+echo "=== END x264 ==="
 if [ "$TRAVIS" = "true" ]
 then
     echo "travis_fold:end:x264"
 fi
-echo "=== END x264 ==="
 
-# download and build x265
-echo "start downloading x265..."
+# download x265
+if [ "$TRAVIS" = "true" ]
+then
+    echo "travis_fold:start:x265"
+fi
+echo "=== START x265 ==="
 cd "$FF_SOURCE"
 curl -O -L https://bitbucket.org/multicoreware/x265/downloads/x265_2.4.tar.gz
+
+# build x265
 tar -zxf x265_*
 cd x265_*
 cmake -DCMAKE_INSTALL_PREFIX:PATH=$FF_OUT -DENABLE_SHARED=NO source
@@ -106,6 +112,11 @@ make
 make install
 # https://mailman.videolan.org/pipermail/x265-devel/2014-April/004227.html
 sed -i -e 's/lx265/lx265 -lstdc++/g' $FF_OUT/lib/pkgconfig/x265.pc
+echo "=== END x265 ==="
+if [ "$TRAVIS" = "true" ]
+then
+    echo "travis_fold:end:x265"
+fi
 
 # download pkg-config
 if [ "$TRAVIS" = "true" ]
