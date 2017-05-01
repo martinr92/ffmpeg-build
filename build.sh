@@ -147,14 +147,13 @@ cd "$FF_SOURCE"
 curl -O https://ffmpeg.org/releases/ffmpeg-$FF_VERSION.tar.bz2
 bunzip2 ffmpeg-$FF_VERSION.tar.bz2
 tar -xf ffmpeg-$FF_VERSION.tar
-export FFMPEG_SOURCE="$FF_SOURCE/ffmpeg-$FF_VERSION"
 
 # build ffmpeg
 echo "start build process..."
 export FF_FLAGS="-L${FF_OUT}/lib -I${FF_OUT}/include" 
 export LDFLAGS="$FF_FLAGS" 
 export CFLAGS="$FF_FLAGS"
-cd "$FFMPEG_SOURCE"
+cd ffmpeg*
 ./configure --prefix="$FF_OUT" --enable-gpl --enable-libx264 --enable-libx265
 if [ $? -ne 0 ]
 then
