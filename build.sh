@@ -28,6 +28,7 @@ then
     echo "travis_fold:start:YASM"
 fi
 echo "=== START YASM ==="
+date
 export FF_OUT_YASM="$FF_ROOT/yasm"
 cd "$FF_SOURCE"
 curl -O http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz
@@ -44,6 +45,7 @@ cd yasm-*
 make
 make install
 export PATH="$FF_OUT_YASM/bin:$PATH"
+date
 echo "=== END YASM ==="
 if [ "$TRAVIS" = "true" ]
 then
@@ -56,6 +58,7 @@ then
     echo "travis_fold:start:CMAKE"
 fi
 echo "=== START CMAKE ==="
+date
 export FF_OUT_CMAKE="$FF_ROOT/cmake"
 cd "$FF_SOURCE"
 curl -O https://cmake.org/files/v3.8/cmake-3.8.0.tar.gz
@@ -67,6 +70,7 @@ cd cmake-*
 make
 make install
 export PATH="$FF_OUT_CMAKE/bin:$PATH"
+date
 echo "=== END CMAKE ==="
 if [ "$TRAVIS" = "true" ]
 then
@@ -79,6 +83,7 @@ then
     echo "travis_fold:start:x264"
 fi
 echo "=== START x264 ==="
+date
 cd "$FF_SOURCE"
 curl -O ftp://ftp.videolan.org/pub/x264/snapshots/last_x264.tar.bz2
 
@@ -89,6 +94,7 @@ cd x264*
 ./configure --prefix="$FF_OUT" --enable-static
 make
 make install
+date
 echo "=== END x264 ==="
 if [ "$TRAVIS" = "true" ]
 then
@@ -101,6 +107,7 @@ then
     echo "travis_fold:start:x265"
 fi
 echo "=== START x265 ==="
+date
 cd "$FF_SOURCE"
 curl -O -L https://bitbucket.org/multicoreware/x265/downloads/x265_2.4.tar.gz
 
@@ -112,6 +119,7 @@ make
 make install
 # https://mailman.videolan.org/pipermail/x265-devel/2014-April/004227.html
 sed -i -e 's/lx265/lx265 -lstdc++/g' $FF_OUT/lib/pkgconfig/x265.pc
+date
 echo "=== END x265 ==="
 if [ "$TRAVIS" = "true" ]
 then
@@ -124,6 +132,7 @@ then
     echo "travis_fold:start:pkg-config"
 fi
 echo "=== START pkg-config ==="
+date
 export FF_OUT_PKG_CONFIG="$FF_ROOT/pkg-config"
 cd "$FF_SOURCE"
 curl -O https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
@@ -135,14 +144,20 @@ cd pkg-config-*
 make
 make install
 export PATH="$FF_OUT_PKG_CONFIG/bin:$PATH"
+date
+echo "=== END pkg-config ==="
 if [ "$TRAVIS" = "true" ]
 then
     echo "travis_fold:end:pkg-config"
 fi
-echo "=== END pkg-config ==="
 
 # download ffmpeg
-echo "start downloading ffmpeg..."
+if [ "$TRAVIS" = "true" ]
+then
+    echo "travis_fold:start:ffmpeg"
+fi
+echo "=== START ffmpeg ==="
+date
 cd "$FF_SOURCE"
 curl -O https://ffmpeg.org/releases/ffmpeg-$FF_VERSION.tar.bz2
 bunzip2 ffmpeg-$FF_VERSION.tar.bz2
@@ -162,6 +177,12 @@ then
 fi
 make
 make install
+date
+echo "=== END ffmpeg ==="
+if [ "$TRAVIS" = "true" ]
+then
+    echo "travis_fold:end:ffmpeg"
+fi
 
 # pack data
 cd "$FF_OUT"
