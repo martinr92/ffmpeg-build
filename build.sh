@@ -2,23 +2,51 @@
 echo "use FF_ROOT = $FF_ROOT"
 export FF_SOURCE="$FF_ROOT/ffsource"
 mkdir "$FF_SOURCE"
+if [ $? -ne 0 ]
+then
+    echo "unable to create source directory!"
+    exit 1
+fi
 export FF_OUT="$FF_ROOT/ffout"
 mkdir "$FF_OUT"
+if [ $? -ne 0 ]
+then
+    echo "unable to create output directory!"
+    exit 1
+fi
 
 # override ff-version for snapshot build
 if [ "$TRAVIS_EVENT_TYPE" = "cron" ]
 then
     export FF_VERSION=snapshot
-    echo "set snapshot version"
+    echo "use snapshot version"
 fi
 
-# download and install yasm
-echo "start downloading yasm..."
+# download yasm
+if [ "$CI" = "true" ]
+then
+    echo "travis_fold:start:YASM"
+else
+    echo "=== START YASM ==="
+fi
 export FF_OUT_YASM="$FF_ROOT/yasm"
 cd "$FF_SOURCE"
 curl -O http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz
-tar -zxf yasm-1.3.0.tar.gz
-cd "yasm-1.3.0"
+if [ $? -ne 0 ]
+then
+    echo "download of yasm failed!"
+    exit 1
+fi
+if [ "$CI" = "true" ]
+then
+    echo "travis_fold:end:YASM"
+else
+    echo "=== END YASM ==="
+fi
+
+# build yasm
+tar -zxf yasm-*
+cd yasm-*
 ./configure --prefix="$FF_OUT_YASM"
 make
 make install
@@ -72,6 +100,11 @@ export LDFLAGS="$FF_FLAGS"
 export CFLAGS="$FF_FLAGS"
 cd "$FFMPEG_SOURCE"
 ./configure --prefix="$FF_OUT" --enable-gpl --enable-libx264 --enable-libx265
+if [ $? -ne 0 ]
+then
+    echo "configuration of ffmpeg failed!"
+    exit 1
+fi
 make
 make install
 
