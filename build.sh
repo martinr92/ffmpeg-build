@@ -23,12 +23,11 @@ then
 fi
 
 # download yasm
-if [ "$CI" = "true" ]
+if [ "$TRAVIS" = "true" ]
 then
     echo "travis_fold:start:YASM"
-else
-    echo "=== START YASM ==="
 fi
+echo "=== START YASM ==="
 export FF_OUT_YASM="$FF_ROOT/yasm"
 cd "$FF_SOURCE"
 curl -O http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz
@@ -36,12 +35,6 @@ if [ $? -ne 0 ]
 then
     echo "download of yasm failed!"
     exit 1
-fi
-if [ "$CI" = "true" ]
-then
-    echo "travis_fold:end:YASM"
-else
-    echo "=== END YASM ==="
 fi
 
 # build yasm
@@ -51,29 +44,56 @@ cd yasm-*
 make
 make install
 export PATH="$FF_OUT_YASM/bin:$PATH"
+if [ "$TRAVIS" = "true" ]
+then
+    echo "travis_fold:end:YASM"
+fi
+echo "=== END YASM ==="
 
-# download and install cmake
-echo "start downloading cmake"
+# download cmake
+if [ "$TRAVIS" = "true" ]
+then
+    echo "travis_fold:start:CMAKE"
+fi
+echo "=== START CMAKE ==="
 export FF_OUT_CMAKE="$FF_ROOT/cmake"
 cd "$FF_SOURCE"
 curl -O https://cmake.org/files/v3.8/cmake-3.8.0.tar.gz
+
+# build cmake
 tar -zxf cmake-*
 cd cmake-*
 ./configure --prefix="$FF_OUT_CMAKE"
 make
 make install
 export PATH="$FF_OUT_CMAKE/bin:$PATH"
+if [ "$TRAVIS" = "true" ]
+then
+    echo "travis_fold:end:CMAKE"
+fi
+echo "=== END CMAKE ==="
 
-# download and build x264
-echo "start downloading x264..."
+# download x264
+if [ "$TRAVIS" = "true" ]
+then
+    echo "travis_fold:start:x264"
+fi
+echo "=== START x264 ==="
 cd "$FF_SOURCE"
 curl -O ftp://ftp.videolan.org/pub/x264/snapshots/last_x264.tar.bz2
+
+# build x264
 bunzip2 last_x264.tar.bz2
 tar -xf last_x264.tar
 cd x264*
 ./configure --prefix="$FF_OUT" --enable-static
 make
 make install
+if [ "$TRAVIS" = "true" ]
+then
+    echo "travis_fold:end:x264"
+fi
+echo "=== END x264 ==="
 
 # download and build x265
 echo "start downloading x265..."
