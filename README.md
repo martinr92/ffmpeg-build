@@ -18,6 +18,36 @@ The created archive contains following data:
 - include (header files)
 - lib (libraries like libavcodec.a, libavfilter.a and libavformat.a)
 - share (documentation and sample code)
+- ffmpeg_codecs.txt
+```
+Codecs:
+ D..... = Decoding supported
+ .E.... = Encoding supported
+ ..V... = Video codec
+ ..A... = Audio codec
+ ..S... = Subtitle codec
+ ...I.. = Intra frame-only codec
+ ....L. = Lossy compression
+ .....S = Lossless compression
+```
+- ffmpeg_formats.txt
+```
+File formats:
+ D. = Demuxing supported
+ .E = Muxing supported
+```
+- ffmpeg_info.txt
+```
+==============
+=== FFMPEG ===
+==============
+ffmpeg version x.x [...]
+==============
+=== x264  ===
+==============
+x264 x.x.x [...]
+[....]
+```
 
 ## execution
 Following environment variables must be set before executing:

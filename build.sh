@@ -184,6 +184,23 @@ then
     echo "travis_fold:end:ffmpeg"
 fi
 
+# create some info files
+cd "$FF_OUT/bin"
+./ffmpeg -codecs > $FF_OUT/ffmpeg_codecs.txt
+./ffmpeg -formats > $FF_OUT/ffmpeg_formats.txt
+echo "==============" > $FF_OUT/ffmpeg_info.txt
+echo "=== FFMPEG ===" >> $FF_OUT/ffmpeg_info.txt
+echo "==============" >> $FF_OUT/ffmpeg_info.txt
+./ffmpeg -version >> $FF_OUT/ffmpeg_info.txt
+echo "==============" >> $FF_OUT/ffmpeg_info.txt
+echo "=== x264  ===" >> $FF_OUT/ffmpeg_info.txt
+echo "==============" >> $FF_OUT/ffmpeg_info.txt
+./x264 --version >> $FF_OUT/ffmpeg_info.txt
+echo "==============" >> $FF_OUT/ffmpeg_info.txt
+echo "=== x265  ===" >> $FF_OUT/ffmpeg_info.txt
+echo "==============" >> $FF_OUT/ffmpeg_info.txt
+./x265 --version >> $FF_OUT/ffmpeg_info.txt 2>&1
+
 # pack data
 cd "$FF_OUT"
 zip -9 -r "$FF_ROOT/ffmpeg-$FF_VERSION.zip" *
