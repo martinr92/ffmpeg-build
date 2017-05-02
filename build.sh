@@ -22,6 +22,13 @@ then
     echo "use snapshot version"
 fi
 
+# check cpu cores
+if [ "$FF_CPU" = "" ]
+then
+    export FF_CPU=1
+fi
+echo "use $FF_CPU CPU cores/threads"
+
 # download yasm
 if [ "$TRAVIS" = "true" ]
 then
@@ -41,8 +48,8 @@ fi
 # build yasm
 tar -zxf yasm-*
 cd yasm-*
-make
 ./configure --enable-silent-rules --prefix="$FF_OUT_YASM"
+make -j $FF_CPU
 make install
 export PATH="$FF_OUT_YASM/bin:$PATH"
 date
@@ -66,8 +73,8 @@ curl -O https://cmake.org/files/v3.8/cmake-3.8.0.tar.gz
 # build cmake
 tar -zxf cmake-*
 cd cmake-*
-./configure --prefix="$FF_OUT_CMAKE"
-make
+./configure --prefix="$FF_OUT_CMAKE" --parallel=$FF_CPU
+make -j $FF_CPU
 make install
 export PATH="$FF_OUT_CMAKE/bin:$PATH"
 date
@@ -92,7 +99,7 @@ bunzip2 last_x264.tar.bz2
 tar -xf last_x264.tar
 cd x264*
 ./configure --prefix="$FF_OUT" --enable-static
-make
+make -j $FF_CPU
 make install
 date
 echo "=== END x264 ==="
@@ -115,7 +122,7 @@ curl -O -L https://bitbucket.org/multicoreware/x265/downloads/x265_2.4.tar.gz
 tar -zxf x265_*
 cd x265_*
 cmake -DCMAKE_INSTALL_PREFIX:PATH=$FF_OUT -DENABLE_SHARED=NO source
-make
+make -j $FF_CPU
 make install
 # https://mailman.videolan.org/pipermail/x265-devel/2014-April/004227.html
 sed -i -e 's/lx265/lx265 -lstdc++/g' $FF_OUT/lib/pkgconfig/x265.pc
@@ -141,7 +148,7 @@ curl -O https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
 tar -zxf pkg-config-*
 cd pkg-config-*
 ./configure --prefix="$FF_OUT_PKG_CONFIG" --with-pc-path="$FF_OUT/lib/pkgconfig" --with-internal-glib
-make
+make -j $FF_CPU
 make install
 export PATH="$FF_OUT_PKG_CONFIG/bin:$PATH"
 date
@@ -175,7 +182,7 @@ then
     echo "configuration of ffmpeg failed!"
     exit 1
 fi
-make
+make -j $FF_CPU
 make install
 date
 echo "=== END ffmpeg ==="
