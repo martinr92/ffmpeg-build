@@ -41,8 +41,8 @@ fi
 # build yasm
 tar -zxf yasm-*
 cd yasm-*
-./configure --prefix="$FF_OUT_YASM"
 make
+./configure --enable-silent-rules --prefix="$FF_OUT_YASM"
 make install
 export PATH="$FF_OUT_YASM/bin:$PATH"
 date
