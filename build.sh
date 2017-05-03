@@ -78,7 +78,13 @@ fi
 # build cmake
 tar -zxf cmake-*
 cd cmake-*
-./configure --prefix="$FF_OUT_CMAKE" --parallel=$FF_CPU
+./configure --prefix="$FF_OUT_CMAKE" --parallel=$FF_CPU > ff-configure-cmake.log
+if [ $? -ne 0 ]
+then
+    echo "configuration of cmake failed!"
+    echo "$(cat ff-configure-cmake.log)"
+    exit 1
+fi
 make -j $FF_CPU
 make install
 export PATH="$FF_OUT_CMAKE/bin:$PATH"
