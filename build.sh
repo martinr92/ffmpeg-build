@@ -241,3 +241,12 @@ echo "==============" >> $FF_OUT/ffmpeg_info.txt
 # pack data
 cd "$FF_OUT"
 zip -9 -r "$FF_ROOT/ffmpeg-$FF_VERSION.zip" *
+
+# upload data
+if [ "$TRAVIS" = "true" ]
+then
+    remotePath=build/${TRAVIS_OS_NAME}/${FF_VERSION}/ffmpeg-${FF_VERSION}_`date +%Y%m%d%H%M%S`.zip
+    curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-$FF_VERSION.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/$remotePath
+    remotePath=build/${TRAVIS_OS_NAME}/${FF_VERSION}/ffmpeg-latest.zip
+    curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-$FF_VERSION.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/$remotePath
+fi
