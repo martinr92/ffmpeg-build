@@ -66,27 +66,30 @@ then
 fi
 echo "=== START CMAKE ==="
 date
-export FF_OUT_CMAKE="$FF_ROOT/cmake"
-cd "$FF_SOURCE"
-curl -O https://cmake.org/files/v3.8/cmake-3.8.1.tar.gz
-if [ $? -ne 0 ]
+export FF_CMAKE_VERSION=3.8.1
+export FF_OUT_CMAKE="$FF_ROOT/cmake/cmake-${FF_CMAKE_VERSION}"
+if [ ! -f $FF_OUT_CMAKE/bin/cmake ]
 then
-    echo "download of cmake failed!"
-    exit 1
-fi
+    cd "$FF_SOURCE"
+    curl -O https://cmake.org/files/v3.8/cmake-${FF_CMAKE_VERSION}.tar.gz
+    if [ $? -ne 0 ]
+    then
+        echo "download of cmake failed!"
+        exit 1
+    fi
 
-# build cmake
-tar -zxf cmake-*
-cd cmake-*
-./configure --prefix="$FF_OUT_CMAKE" --parallel=$FF_CPU > ff-configure-cmake.log
-if [ $? -ne 0 ]
-then
-    echo "configuration of cmake failed!"
-    echo "$(cat ff-configure-cmake.log)"
-    exit 1
+    # build cmake
+    tar -zxf cmake-*
+    cd cmake-*
+    ./configure --prefix="$FF_OUT_CMAKE" --parallel=$FF_CPU
+    if [ $? -ne 0 ]
+    then
+        echo "configuration of cmake failed!"
+        exit 1
+    fi
+    make -j $FF_CPU
+    make install
 fi
-make -j $FF_CPU
-make install
 export PATH="$FF_OUT_CMAKE/bin:$PATH"
 date
 echo "=== END CMAKE ==="
