@@ -68,7 +68,7 @@ echo "=== START CMAKE ==="
 date
 export FF_OUT_CMAKE="$FF_ROOT/cmake"
 cd "$FF_SOURCE"
-curl -O https://cmake.org/files/v3.8/cmake-3.8.0.tar.gz
+curl -O https://cmake.org/files/v3.8/cmake-3.8.1.tar.gz
 if [ $? -ne 0 ]
 then
     echo "download of cmake failed!"
