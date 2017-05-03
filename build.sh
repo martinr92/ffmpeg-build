@@ -69,6 +69,11 @@ date
 export FF_OUT_CMAKE="$FF_ROOT/cmake"
 cd "$FF_SOURCE"
 curl -O https://cmake.org/files/v3.8/cmake-3.8.0.tar.gz
+if [ $? -ne 0 ]
+then
+    echo "download of cmake failed!"
+    exit 1
+fi
 
 # build cmake
 tar -zxf cmake-*
@@ -93,6 +98,11 @@ echo "=== START x264 ==="
 date
 cd "$FF_SOURCE"
 curl -O ftp://ftp.videolan.org/pub/x264/snapshots/last_x264.tar.bz2
+if [ $? -ne 0 ]
+then
+    echo "download of x264 failed!"
+    exit 1
+fi
 
 # build x264
 bunzip2 last_x264.tar.bz2
@@ -117,6 +127,11 @@ echo "=== START x265 ==="
 date
 cd "$FF_SOURCE"
 curl -O -L https://bitbucket.org/multicoreware/x265/downloads/x265_2.4.tar.gz
+if [ $? -ne 0 ]
+then
+    echo "download of x265 failed!"
+    exit 1
+fi
 
 # build x265
 tar -zxf x265_*
@@ -143,6 +158,11 @@ date
 export FF_OUT_PKG_CONFIG="$FF_ROOT/pkg-config"
 cd "$FF_SOURCE"
 curl -O https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
+if [ $? -ne 0 ]
+then
+    echo "download of pkg-config failed!"
+    exit 1
+fi
 
 # build pkg-config
 tar -zxf pkg-config-*
@@ -167,11 +187,15 @@ echo "=== START ffmpeg ==="
 date
 cd "$FF_SOURCE"
 curl -O https://ffmpeg.org/releases/ffmpeg-$FF_VERSION.tar.bz2
-bunzip2 ffmpeg-$FF_VERSION.tar.bz2
-tar -xf ffmpeg-$FF_VERSION.tar
+if [ $? -ne 0 ]
+then
+    echo "download of ffmpeg failed!"
+    exit 1
+fi
 
 # build ffmpeg
-echo "start build process..."
+bunzip2 ffmpeg-$FF_VERSION.tar.bz2
+tar -xf ffmpeg-$FF_VERSION.tar
 export FF_FLAGS="-L${FF_OUT}/lib -I${FF_OUT}/include" 
 export LDFLAGS="$FF_FLAGS" 
 export CFLAGS="$FF_FLAGS"
