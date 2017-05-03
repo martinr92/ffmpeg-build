@@ -50,6 +50,11 @@ tar -zxf yasm-*
 cd yasm-*
 ./configure --enable-silent-rules --prefix="$FF_OUT_YASM"
 make -j $FF_CPU
+if [ $? -ne 0 ]
+then
+    echo "compilation of yasm failed!"
+    exit 1
+fi
 make install
 export PATH="$FF_OUT_YASM/bin:$PATH"
 date
@@ -88,6 +93,11 @@ then
         exit 1
     fi
     make -j $FF_CPU
+    if [ $? -ne 0 ]
+    then
+        echo "compilation of cmake failed!"
+        exit 1
+    fi
     make install
 fi
 export PATH="$FF_OUT_CMAKE/bin:$PATH"
@@ -119,6 +129,11 @@ tar -xf last_x264.tar
 cd x264*
 ./configure --prefix="$FF_OUT" --enable-static
 make -j $FF_CPU
+if [ $? -ne 0 ]
+then
+    echo "compilation of x264 failed!"
+    exit 1
+fi
 make install
 date
 echo "=== END x264 ==="
@@ -147,6 +162,11 @@ tar -zxf x265_*
 cd x265_*
 cmake -DCMAKE_INSTALL_PREFIX:PATH=$FF_OUT -DENABLE_SHARED=NO source
 make -j $FF_CPU
+if [ $? -ne 0 ]
+then
+    echo "compilation of x265 failed!"
+    exit 1
+fi
 make install
 # https://mailman.videolan.org/pipermail/x265-devel/2014-April/004227.html
 sed -i -e 's/lx265/lx265 -lstdc++/g' $FF_OUT/lib/pkgconfig/x265.pc
@@ -178,6 +198,11 @@ tar -zxf pkg-config-*
 cd pkg-config-*
 ./configure --prefix="$FF_OUT_PKG_CONFIG" --with-pc-path="$FF_OUT/lib/pkgconfig" --with-internal-glib
 make -j $FF_CPU
+if [ $? -ne 0 ]
+then
+    echo "compilation of pkg-config failed!"
+    exit 1
+fi
 make install
 export PATH="$FF_OUT_PKG_CONFIG/bin:$PATH"
 date
@@ -216,6 +241,11 @@ then
     exit 1
 fi
 make -j $FF_CPU
+if [ $? -ne 0 ]
+then
+    echo "compilation of ffmpeg failed!"
+    exit 1
+fi
 make install
 date
 echo "=== END ffmpeg ==="
