@@ -2,9 +2,9 @@
 [![Build Status](https://travis-ci.org/martinr92/ffmpeg-build.svg?branch=master)](https://travis-ci.org/martinr92/ffmpeg-build)
 
 ## download
-If you not want to compile ffmpeg on yourself, download a successful build from [https://ffmpeg.martin-riedl.de/build/osx/](https://ffmpeg.martin-riedl.de/build/osx/).
+If you not want to compile ffmpeg on yourself, download a successful build from [https://ffmpeg.martin-riedl.de/build/](https://ffmpeg.martin-riedl.de/build/).
 
-## ffmpeg build for OSX
+## ffmpeg build for Mac OS X and Linux
 This repository builds ffmpeg, ffprobe and ffserver for Mac OSX using
 - [cmake 3.8.1](https://cmake.org/)
 - [pkg-config 0.29.2](https://www.freedesktop.org/wiki/Software/pkg-config/)
@@ -46,7 +46,7 @@ ffmpeg version x.x [...]
 === x264  ===
 ==============
 x264 x.x.x [...]
-[....]
+[...]
 ```
 
 ## execution

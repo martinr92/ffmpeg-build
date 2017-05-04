@@ -1,6 +1,8 @@
 language: c
 
-os: osx
+os:
+  - osx
+  - linux
 
 env: FF_ROOT=$TRAVIS_BUILD_DIR FF_VERSION=3.3 FF_CPU=2
 
