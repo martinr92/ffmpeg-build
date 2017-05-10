@@ -1,18 +1,22 @@
-# ffmpeg-build
+# Ffmpeg-build
 [![Build Status](https://travis-ci.org/martinr92/ffmpeg-build.svg?branch=master)](https://travis-ci.org/martinr92/ffmpeg-build)
 
-## download
+## Download
 If you not want to compile ffmpeg on yourself, download a successful build from [https://ffmpeg.martin-riedl.de/build/](https://ffmpeg.martin-riedl.de/build/).
 
-## ffmpeg build for Mac OS X and Linux
+## Ffmpeg build for Mac OS X and Linux
 This repository builds ffmpeg, ffprobe and ffserver for Mac OSX using
-- [cmake 3.8.1](https://cmake.org/)
-- [pkg-config 0.29.2](https://www.freedesktop.org/wiki/Software/pkg-config/)
-- [x264](http://www.videolan.org/developers/x264.html)
-- [x265 2.4](http://x265.org/)
-- [YASM 1.3.0](http://yasm.tortall.net/)
+- build
+    - [cmake 3.8.1](https://cmake.org/)
+    - [pkg-config 0.29.2](https://www.freedesktop.org/wiki/Software/pkg-config/)
+    - [YASM 1.3.0](http://yasm.tortall.net/)
+- video encoding
+    - [x264](http://www.videolan.org/developers/x264.html)
+    - [x265 2.4](http://x265.org/)
+- audio encoding
+    - [LAME 3.99.5](http://lame.sourceforge.net/)
 
-## archive
+## Archive
 The created archive contains following data:
 - bin (binary files like ffmpeg, ffprobe and ffserver)
 - include (header files)
@@ -49,7 +53,7 @@ x264 x.x.x [...]
 [...]
 ```
 
-## execution
+## Execution
 Following environment variables must be set before executing:
 - FF_ROOT = empty directory for the whole content
 - FF_VERSION = ffmpeg version (e.g. 3.3 or snapshot)

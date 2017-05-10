@@ -177,6 +177,39 @@ then
     echo "travis_fold:end:x265"
 fi
 
+# download lame (mp3)
+if [ "$TRAVIS" = "true" ]
+then
+    echo "travis_fold:start:lame"
+fi
+echo "=== START lame ==="
+date
+cd "$FF_SOURCE"
+curl -O https://netcologne.dl.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz
+if [ $? -ne 0 ]
+then
+    echo "download of lame failed!"
+    exit 1
+fi
+
+# build lame
+tar -zxf lame*
+cd lame*
+./configure --prefix="$FF_OUT" --enable-shared=no
+make -j $FF_CPU
+if [ $? -ne 0 ]
+then
+    echo "compilation of lame failed!"
+    exit 1
+fi
+make install
+date
+echo "=== END lame ==="
+if [ "$TRAVIS" = "true" ]
+then
+    echo "travis_fold:end:lame"
+fi
+
 # download pkg-config
 if [ "$TRAVIS" = "true" ]
 then
@@ -234,7 +267,7 @@ export FF_FLAGS="-L${FF_OUT}/lib -I${FF_OUT}/include"
 export LDFLAGS="$FF_FLAGS" 
 export CFLAGS="$FF_FLAGS"
 cd ffmpeg*
-./configure --prefix="$FF_OUT" --enable-gpl --enable-libx264 --enable-libx265
+./configure --prefix="$FF_OUT" --enable-gpl --enable-libx264 --enable-libx265 --enable-libmp3lame
 if [ $? -ne 0 ]
 then
     echo "configuration of ffmpeg failed!"
@@ -258,18 +291,22 @@ fi
 cd "$FF_OUT/bin"
 ./ffmpeg -codecs > $FF_OUT/ffmpeg_codecs.txt
 ./ffmpeg -formats > $FF_OUT/ffmpeg_formats.txt
-echo "==============" > $FF_OUT/ffmpeg_info.txt
-echo "=== FFMPEG ===" >> $FF_OUT/ffmpeg_info.txt
-echo "==============" >> $FF_OUT/ffmpeg_info.txt
+echo "==================" > $FF_OUT/ffmpeg_info.txt
+echo "===   FFMPEG   ===" >> $FF_OUT/ffmpeg_info.txt
+echo "==================" >> $FF_OUT/ffmpeg_info.txt
 ./ffmpeg -version >> $FF_OUT/ffmpeg_info.txt
-echo "==============" >> $FF_OUT/ffmpeg_info.txt
-echo "=== x264  ===" >> $FF_OUT/ffmpeg_info.txt
-echo "==============" >> $FF_OUT/ffmpeg_info.txt
+echo "==================" >> $FF_OUT/ffmpeg_info.txt
+echo "===    x264    ===" >> $FF_OUT/ffmpeg_info.txt
+echo "==================" >> $FF_OUT/ffmpeg_info.txt
 ./x264 --version >> $FF_OUT/ffmpeg_info.txt
-echo "==============" >> $FF_OUT/ffmpeg_info.txt
-echo "=== x265  ===" >> $FF_OUT/ffmpeg_info.txt
-echo "==============" >> $FF_OUT/ffmpeg_info.txt
+echo "==================" >> $FF_OUT/ffmpeg_info.txt
+echo "===    x265    ===" >> $FF_OUT/ffmpeg_info.txt
+echo "==================" >> $FF_OUT/ffmpeg_info.txt
 ./x265 --version >> $FF_OUT/ffmpeg_info.txt 2>&1
+echo "==================" >> $FF_OUT/ffmpeg_info.txt
+echo "=== lame (mp3) ===" >> $FF_OUT/ffmpeg_info.txt
+echo "==================" >> $FF_OUT/ffmpeg_info.txt
+./lame --license | head -1 >> $FF_OUT/ffmpeg_info.txt
 
 # pack data
 cd "$FF_OUT"
