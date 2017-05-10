@@ -10,11 +10,11 @@ This repository builds ffmpeg, ffprobe and ffserver for Mac OSX using
     - [cmake 3.8.1](https://cmake.org/)
     - [pkg-config 0.29.2](https://www.freedesktop.org/wiki/Software/pkg-config/)
     - [YASM 1.3.0](http://yasm.tortall.net/)
-- video encoding
-    - [x264](http://www.videolan.org/developers/x264.html)
-    - [x265 2.4](http://x265.org/)
-- audio encoding
-    - [LAME 3.99.5](http://lame.sourceforge.net/)
+- video codec
+    - [x264](http://www.videolan.org/developers/x264.html) for H.264 encoding
+    - [x265 2.4](http://x265.org/) for H.265/HEVC encoding
+- audio codec
+    - [LAME 3.99.5](http://lame.sourceforge.net/) for MP3 encoding
 
 ## Archive
 The created archive contains following data:
