@@ -177,6 +177,39 @@ then
     echo "travis_fold:end:x265"
 fi
 
+# download fdk-aac
+if [ "$TRAVIS" = "true" ]
+then
+    echo "travis_fold:start:fdk-aac"
+fi
+echo "=== START fdk-aac ==="
+date
+cd "$FF_SOURCE"
+curl -O https://netcologne.dl.sourceforge.net/project/opencore-amr/fdk-aac/fdk-aac-0.1.5.tar.gz
+if [ $? -ne 0 ]
+then
+    echo "download of fdk-aac failed!"
+    exit 1
+fi
+
+# build fdk-aac
+tar -zxf fdk-aac*
+cd fdk-aac*
+./configure --prefix="$FF_OUT" --enable-shared=no
+make -j $FF_CPU
+if [ $? -ne 0 ]
+then
+    echo "compilation of fdk-aac failed!"
+    exit 1
+fi
+make install
+date
+echo "=== END fdk-aac ==="
+if [ "$TRAVIS" = "true" ]
+then
+    echo "travis_fold:end:fdk-aac"
+fi
+
 # download lame (mp3)
 if [ "$TRAVIS" = "true" ]
 then
@@ -267,7 +300,7 @@ export FF_FLAGS="-L${FF_OUT}/lib -I${FF_OUT}/include"
 export LDFLAGS="$FF_FLAGS" 
 export CFLAGS="$FF_FLAGS"
 cd ffmpeg*
-./configure --prefix="$FF_OUT" --enable-gpl --enable-libx264 --enable-libx265 --enable-libmp3lame
+./configure --prefix="$FF_OUT" --enable-gpl --enable-nonfree --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-libmp3lame
 if [ $? -ne 0 ]
 then
     echo "configuration of ffmpeg failed!"
