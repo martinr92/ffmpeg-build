@@ -20,22 +20,23 @@ function endBlock {
     fi
 }
 
+# check execution status
+function checkExecutionStatus {
+    if [ $2 -ne 0 ]
+    then
+        echo "ERROR in step '$1'"
+        exit 1
+    fi
+}
+
 # set some paths and environment variables
 echo "use FF_ROOT = $FF_ROOT"
 export FF_SOURCE="$FF_ROOT/ffsource"
 mkdir "$FF_SOURCE"
-if [ $? -ne 0 ]
-then
-    echo "unable to create source directory!"
-    exit 1
-fi
+checkExecutionStatus "create source directory" $?
 export FF_OUT="$FF_ROOT/ffout"
 mkdir "$FF_OUT"
-if [ $? -ne 0 ]
-then
-    echo "unable to create output directory!"
-    exit 1
-fi
+checkExecutionStatus "create output directory" $?
 
 # override ff-version for snapshot build
 if [ "$TRAVIS_EVENT_TYPE" = "cron" ]
@@ -56,28 +57,17 @@ startBlock yasm
 export FF_OUT_YASM="$FF_ROOT/yasm"
 cd "$FF_SOURCE"
 curl -O http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz
-if [ $? -ne 0 ]
-then
-    echo "download of yasm failed!"
-    exit 1
-fi
+checkExecutionStatus "download of yasm" $?
 
 # build yasm
 tar -zxf yasm-*
 cd yasm-*
 ./configure --enable-silent-rules --prefix="$FF_OUT_YASM"
-if [ $? -ne 0 ]
-then
-    echo "configuration of yasm failed!"
-    exit 1
-fi
+checkExecutionStatus "configuration of yasm" $?
 make -j $FF_CPU
-if [ $? -ne 0 ]
-then
-    echo "compilation of yasm failed!"
-    exit 1
-fi
+checkExecutionStatus "compilation of yasm" $?
 make install
+checkExecutionStatus "installation of yasm" $?
 export PATH="$FF_OUT_YASM/bin:$PATH"
 endBlock yasm
 
@@ -89,28 +79,17 @@ if [ ! -f $FF_OUT_CMAKE/bin/cmake ]
 then
     cd "$FF_SOURCE"
     curl -O https://cmake.org/files/v3.8/cmake-${FF_CMAKE_VERSION}.tar.gz
-    if [ $? -ne 0 ]
-    then
-        echo "download of cmake failed!"
-        exit 1
-    fi
+    checkExecutionStatus "download of cmake" $?
 
     # build cmake
     tar -zxf cmake-*
     cd cmake-*
     ./configure --prefix="$FF_OUT_CMAKE" --parallel=$FF_CPU
-    if [ $? -ne 0 ]
-    then
-        echo "configuration of cmake failed!"
-        exit 1
-    fi
+    checkExecutionStatus "configuration of cmake" $?
     make -j $FF_CPU
-    if [ $? -ne 0 ]
-    then
-        echo "compilation of cmake failed!"
-        exit 1
-    fi
+    checkExecutionStatus "compilation of cmake" $?
     make install
+    checkExecutionStatus "installation of cmake" $?
 fi
 export PATH="$FF_OUT_CMAKE/bin:$PATH"
 endBlock cmake
@@ -119,52 +98,34 @@ endBlock cmake
 startBlock x264
 cd "$FF_SOURCE"
 curl -O ftp://ftp.videolan.org/pub/x264/snapshots/last_x264.tar.bz2
-if [ $? -ne 0 ]
-then
-    echo "download of x264 failed!"
-    exit 1
-fi
+checkExecutionStatus "download of x264" $?
 
 # build x264
 bunzip2 last_x264.tar.bz2
 tar -xf last_x264.tar
 cd x264*
 ./configure --prefix="$FF_OUT" --enable-static
-if [ $? -ne 0 ]
-then
-    echo "configuration of x264 failed!"
-    exit 1
-fi
+checkExecutionStatus "configuration of x264" $?
 make -j $FF_CPU
-if [ $? -ne 0 ]
-then
-    echo "compilation of x264 failed!"
-    exit 1
-fi
+checkExecutionStatus "compilation of x264" $?
 make install
+checkExecutionStatus "installation of x264" $?
 endBlock x264
 
 # download x265
 startBlock x265
 cd "$FF_SOURCE"
 curl -O -L https://bitbucket.org/multicoreware/x265/downloads/x265_2.4.tar.gz
-if [ $? -ne 0 ]
-then
-    echo "download of x265 failed!"
-    exit 1
-fi
+checkExecutionStatus "download of x265" $?
 
 # build x265
 tar -zxf x265_*
 cd x265_*
 cmake -DCMAKE_INSTALL_PREFIX:PATH=$FF_OUT -DENABLE_SHARED=NO source
 make -j $FF_CPU
-if [ $? -ne 0 ]
-then
-    echo "compilation of x265 failed!"
-    exit 1
-fi
+checkExecutionStatus "compilation of x265" $?
 make install
+checkExecutionStatus "installation of x265" $?
 # https://mailman.videolan.org/pipermail/x265-devel/2014-April/004227.html
 sed -i -e 's/lx265/lx265 -lstdc++/g' $FF_OUT/lib/pkgconfig/x265.pc
 endBlock x265
@@ -173,56 +134,34 @@ endBlock x265
 startBlock fdk-aac
 cd "$FF_SOURCE"
 curl -O https://netcologne.dl.sourceforge.net/project/opencore-amr/fdk-aac/fdk-aac-0.1.5.tar.gz
-if [ $? -ne 0 ]
-then
-    echo "download of fdk-aac failed!"
-    exit 1
-fi
+checkExecutionStatus "download of fdk-aac" $?
 
 # build fdk-aac
 tar -zxf fdk-aac*
 cd fdk-aac*
 ./configure --prefix="$FF_OUT" --enable-shared=no
-if [ $? -ne 0 ]
-then
-    echo "configuration of fdk-aac failed!"
-    exit 1
-fi
+checkExecutionStatus "configuration of fdk-aac" $?
 make -j $FF_CPU
-if [ $? -ne 0 ]
-then
-    echo "compilation of fdk-aac failed!"
-    exit 1
-fi
+checkExecutionStatus "compilation of fdk-aac" $?
 make install
+checkExecutionStatus "installation of fdk-aac" $?
 endBlock fdk-aac
 
 # download lame (mp3)
 startBlock lame-mp3
 cd "$FF_SOURCE"
 curl -O https://netcologne.dl.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz
-if [ $? -ne 0 ]
-then
-    echo "download of lame-mp3 failed!"
-    exit 1
-fi
+checkExecutionStatus "download of lame-mp3" $?
 
 # build lame
 tar -zxf lame*
 cd lame*
 ./configure --prefix="$FF_OUT" --enable-shared=no
-if [ $? -ne 0 ]
-then
-    echo "configuration of lame-mp3 failed!"
-    exit 1
-fi
+checkExecutionStatus "configuration of lame-mp3" $?
 make -j $FF_CPU
-if [ $? -ne 0 ]
-then
-    echo "compilation of lame-mp3 failed!"
-    exit 1
-fi
+checkExecutionStatus "compilation of lame-mp3" $?
 make install
+checkExecutionStatus "installation of lame-mp3" $?
 endBlock lame-mp3
 
 # download pkg-config
@@ -230,28 +169,17 @@ startBlock pkg-config
 export FF_OUT_PKG_CONFIG="$FF_ROOT/pkg-config"
 cd "$FF_SOURCE"
 curl -O https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
-if [ $? -ne 0 ]
-then
-    echo "download of pkg-config failed!"
-    exit 1
-fi
+checkExecutionStatus "download of pkg-config" $?
 
 # build pkg-config
 tar -zxf pkg-config-*
 cd pkg-config-*
 ./configure --prefix="$FF_OUT_PKG_CONFIG" --with-pc-path="$FF_OUT/lib/pkgconfig" --with-internal-glib
-if [ $? -ne 0 ]
-then
-    echo "configuration of pkg-config failed!"
-    exit 1
-fi
+checkExecutionStatus "configuration of pkg-config" $?
 make -j $FF_CPU
-if [ $? -ne 0 ]
-then
-    echo "compilation of pkg-config failed!"
-    exit 1
-fi
+checkExecutionStatus "compilation of pkg-config" $?
 make install
+checkExecutionStatus "installation of pkg-config" $?
 export PATH="$FF_OUT_PKG_CONFIG/bin:$PATH"
 endBlock pkg-config
 
@@ -259,11 +187,7 @@ endBlock pkg-config
 startBlock ffmpeg
 cd "$FF_SOURCE"
 curl -O https://ffmpeg.org/releases/ffmpeg-$FF_VERSION.tar.bz2
-if [ $? -ne 0 ]
-then
-    echo "download of ffmpeg failed!"
-    exit 1
-fi
+checkExecutionStatus "download of ffmpeg" $?
 
 # build ffmpeg
 bunzip2 ffmpeg-$FF_VERSION.tar.bz2
@@ -273,18 +197,11 @@ export LDFLAGS="$FF_FLAGS"
 export CFLAGS="$FF_FLAGS"
 cd ffmpeg*
 ./configure --prefix="$FF_OUT" --enable-gpl --enable-nonfree --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-libmp3lame
-if [ $? -ne 0 ]
-then
-    echo "configuration of ffmpeg failed!"
-    exit 1
-fi
+checkExecutionStatus "configuration of ffmpeg" $?
 make -j $FF_CPU
-if [ $? -ne 0 ]
-then
-    echo "compilation of ffmpeg failed!"
-    exit 1
-fi
+checkExecutionStatus "compilation of ffmpeg" $?
 make install
+checkExecutionStatus "installation of ffmpeg" $?
 endBlock ffmpeg
 
 # create some info files
