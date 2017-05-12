@@ -10,6 +10,7 @@ function startBlock {
     date
 }
 
+# block end
 function endBlock {
     date
     echo "=== END $1 ==="
@@ -65,6 +66,11 @@ fi
 tar -zxf yasm-*
 cd yasm-*
 ./configure --enable-silent-rules --prefix="$FF_OUT_YASM"
+if [ $? -ne 0 ]
+then
+    echo "configuration of yasm failed!"
+    exit 1
+fi
 make -j $FF_CPU
 if [ $? -ne 0 ]
 then
@@ -124,6 +130,11 @@ bunzip2 last_x264.tar.bz2
 tar -xf last_x264.tar
 cd x264*
 ./configure --prefix="$FF_OUT" --enable-static
+if [ $? -ne 0 ]
+then
+    echo "configuration of x264 failed!"
+    exit 1
+fi
 make -j $FF_CPU
 if [ $? -ne 0 ]
 then
@@ -172,6 +183,11 @@ fi
 tar -zxf fdk-aac*
 cd fdk-aac*
 ./configure --prefix="$FF_OUT" --enable-shared=no
+if [ $? -ne 0 ]
+then
+    echo "configuration of fdk-aac failed!"
+    exit 1
+fi
 make -j $FF_CPU
 if [ $? -ne 0 ]
 then
@@ -187,7 +203,7 @@ cd "$FF_SOURCE"
 curl -O https://netcologne.dl.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz
 if [ $? -ne 0 ]
 then
-    echo "download of lame failed!"
+    echo "download of lame-mp3 failed!"
     exit 1
 fi
 
@@ -195,10 +211,15 @@ fi
 tar -zxf lame*
 cd lame*
 ./configure --prefix="$FF_OUT" --enable-shared=no
+if [ $? -ne 0 ]
+then
+    echo "configuration of lame-mp3 failed!"
+    exit 1
+fi
 make -j $FF_CPU
 if [ $? -ne 0 ]
 then
-    echo "compilation of lame failed!"
+    echo "compilation of lame-mp3 failed!"
     exit 1
 fi
 make install
@@ -219,6 +240,11 @@ fi
 tar -zxf pkg-config-*
 cd pkg-config-*
 ./configure --prefix="$FF_OUT_PKG_CONFIG" --with-pc-path="$FF_OUT/lib/pkgconfig" --with-internal-glib
+if [ $? -ne 0 ]
+then
+    echo "configuration of pkg-config failed!"
+    exit 1
+fi
 make -j $FF_CPU
 if [ $? -ne 0 ]
 then
