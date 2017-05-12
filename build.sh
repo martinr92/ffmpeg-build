@@ -1,3 +1,24 @@
+#!/bin/bash
+
+# block start
+function startBlock {
+    if [ "$TRAVIS" = "true" ]
+    then
+        echo "travis_fold:start:$1"
+    fi
+    echo "=== START $1 ==="
+    date
+}
+
+function endBlock {
+    date
+    echo "=== END $1 ==="
+    if [ "$TRAVIS" = "true" ]
+    then
+        echo "travis_fold:end:$1"
+    fi
+}
+
 # set some paths and environment variables
 echo "use FF_ROOT = $FF_ROOT"
 export FF_SOURCE="$FF_ROOT/ffsource"
@@ -30,12 +51,7 @@ fi
 echo "use $FF_CPU CPU cores/threads"
 
 # download yasm
-if [ "$TRAVIS" = "true" ]
-then
-    echo "travis_fold:start:YASM"
-fi
-echo "=== START YASM ==="
-date
+startBlock yasm
 export FF_OUT_YASM="$FF_ROOT/yasm"
 cd "$FF_SOURCE"
 curl -O http://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz
@@ -57,20 +73,10 @@ then
 fi
 make install
 export PATH="$FF_OUT_YASM/bin:$PATH"
-date
-echo "=== END YASM ==="
-if [ "$TRAVIS" = "true" ]
-then
-    echo "travis_fold:end:YASM"
-fi
+endBlock yasm
 
 # download cmake
-if [ "$TRAVIS" = "true" ]
-then
-    echo "travis_fold:start:CMAKE"
-fi
-echo "=== START CMAKE ==="
-date
+startBlock cmake
 export FF_CMAKE_VERSION=3.8.1
 export FF_OUT_CMAKE="$FF_ROOT/cmake/cmake-${FF_CMAKE_VERSION}"
 if [ ! -f $FF_OUT_CMAKE/bin/cmake ]
@@ -101,20 +107,10 @@ then
     make install
 fi
 export PATH="$FF_OUT_CMAKE/bin:$PATH"
-date
-echo "=== END CMAKE ==="
-if [ "$TRAVIS" = "true" ]
-then
-    echo "travis_fold:end:CMAKE"
-fi
+endBlock cmake
 
 # download x264
-if [ "$TRAVIS" = "true" ]
-then
-    echo "travis_fold:start:x264"
-fi
-echo "=== START x264 ==="
-date
+startBlock x264
 cd "$FF_SOURCE"
 curl -O ftp://ftp.videolan.org/pub/x264/snapshots/last_x264.tar.bz2
 if [ $? -ne 0 ]
@@ -135,20 +131,10 @@ then
     exit 1
 fi
 make install
-date
-echo "=== END x264 ==="
-if [ "$TRAVIS" = "true" ]
-then
-    echo "travis_fold:end:x264"
-fi
+endBlock x264
 
 # download x265
-if [ "$TRAVIS" = "true" ]
-then
-    echo "travis_fold:start:x265"
-fi
-echo "=== START x265 ==="
-date
+startBlock x265
 cd "$FF_SOURCE"
 curl -O -L https://bitbucket.org/multicoreware/x265/downloads/x265_2.4.tar.gz
 if [ $? -ne 0 ]
@@ -170,20 +156,10 @@ fi
 make install
 # https://mailman.videolan.org/pipermail/x265-devel/2014-April/004227.html
 sed -i -e 's/lx265/lx265 -lstdc++/g' $FF_OUT/lib/pkgconfig/x265.pc
-date
-echo "=== END x265 ==="
-if [ "$TRAVIS" = "true" ]
-then
-    echo "travis_fold:end:x265"
-fi
+endBlock x265
 
 # download fdk-aac
-if [ "$TRAVIS" = "true" ]
-then
-    echo "travis_fold:start:fdk-aac"
-fi
-echo "=== START fdk-aac ==="
-date
+startBlock fdk-aac
 cd "$FF_SOURCE"
 curl -O https://netcologne.dl.sourceforge.net/project/opencore-amr/fdk-aac/fdk-aac-0.1.5.tar.gz
 if [ $? -ne 0 ]
@@ -203,20 +179,10 @@ then
     exit 1
 fi
 make install
-date
-echo "=== END fdk-aac ==="
-if [ "$TRAVIS" = "true" ]
-then
-    echo "travis_fold:end:fdk-aac"
-fi
+endBlock fdk-aac
 
 # download lame (mp3)
-if [ "$TRAVIS" = "true" ]
-then
-    echo "travis_fold:start:lame"
-fi
-echo "=== START lame ==="
-date
+startBlock lame-mp3
 cd "$FF_SOURCE"
 curl -O https://netcologne.dl.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz
 if [ $? -ne 0 ]
@@ -236,20 +202,10 @@ then
     exit 1
 fi
 make install
-date
-echo "=== END lame ==="
-if [ "$TRAVIS" = "true" ]
-then
-    echo "travis_fold:end:lame"
-fi
+endBlock lame-mp3
 
 # download pkg-config
-if [ "$TRAVIS" = "true" ]
-then
-    echo "travis_fold:start:pkg-config"
-fi
-echo "=== START pkg-config ==="
-date
+startBlock pkg-config
 export FF_OUT_PKG_CONFIG="$FF_ROOT/pkg-config"
 cd "$FF_SOURCE"
 curl -O https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
@@ -271,20 +227,10 @@ then
 fi
 make install
 export PATH="$FF_OUT_PKG_CONFIG/bin:$PATH"
-date
-echo "=== END pkg-config ==="
-if [ "$TRAVIS" = "true" ]
-then
-    echo "travis_fold:end:pkg-config"
-fi
+endBlock pkg-config
 
 # download ffmpeg
-if [ "$TRAVIS" = "true" ]
-then
-    echo "travis_fold:start:ffmpeg"
-fi
-echo "=== START ffmpeg ==="
-date
+startBlock ffmpeg
 cd "$FF_SOURCE"
 curl -O https://ffmpeg.org/releases/ffmpeg-$FF_VERSION.tar.bz2
 if [ $? -ne 0 ]
@@ -313,12 +259,7 @@ then
     exit 1
 fi
 make install
-date
-echo "=== END ffmpeg ==="
-if [ "$TRAVIS" = "true" ]
-then
-    echo "travis_fold:end:ffmpeg"
-fi
+endBlock ffmpeg
 
 # create some info files
 cd "$FF_OUT/bin"
@@ -342,14 +283,18 @@ echo "==================" >> $FF_OUT/ffmpeg_info.txt
 ./lame --license | head -1 >> $FF_OUT/ffmpeg_info.txt
 
 # pack data
+startBlock zip-content
 cd "$FF_OUT"
 zip -9 -r "$FF_ROOT/ffmpeg-$FF_VERSION.zip" *
+endBlock zip-content
 
 # upload data
 if [ "$TRAVIS" = "true" ]
 then
+    startBlock upload-ftp
     remotePath=build/${TRAVIS_OS_NAME}/${FF_VERSION}/ffmpeg-${FF_VERSION}_`date +%Y%m%d%H%M%S`.zip
     curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-$FF_VERSION.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/$remotePath
     remotePath=build/${TRAVIS_OS_NAME}/${FF_VERSION}/ffmpeg-latest.zip
     curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-$FF_VERSION.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/$remotePath
+    endBlock upload-ftp
 fi
