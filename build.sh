@@ -130,6 +130,23 @@ checkExecutionStatus "installation of x265" $?
 sed -i -e 's/lx265/lx265 -lstdc++/g' $FF_OUT/lib/pkgconfig/x265.pc
 endBlock x265
 
+# download vpx
+startBlock vpx
+cd "$FF_SOURCE"
+curl -o vpx.tar.gz -L https://github.com/webmproject/libvpx/archive/v1.6.1.tar.gz
+checkExecutionStatus "download of vpx" $?
+
+# build vpx
+tar -zxf vpx*
+cd libvpx*
+./configure --prefix="$FF_OUT"
+checkExecutionStatus "configuration of vpx" $?
+make -j $FF_CPU
+checkExecutionStatus "compilation of vpx" $?
+make install
+checkExecutionStatus "installation of vpx" $?
+endBlock vpx
+
 # download fdk-aac
 startBlock fdk-aac
 cd "$FF_SOURCE"
@@ -192,11 +209,12 @@ checkExecutionStatus "download of ffmpeg" $?
 # build ffmpeg
 bunzip2 ffmpeg-$FF_VERSION.tar.bz2
 tar -xf ffmpeg-$FF_VERSION.tar
-export FF_FLAGS="-L${FF_OUT}/lib -I${FF_OUT}/include" 
-export LDFLAGS="$FF_FLAGS" 
+export FF_FLAGS="-L${FF_OUT}/lib -I${FF_OUT}/include"
+export LDFLAGS="$FF_FLAGS"
 export CFLAGS="$FF_FLAGS"
 cd ffmpeg*
-./configure --prefix="$FF_OUT" --enable-gpl --enable-nonfree --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-libmp3lame
+./configure --prefix="$FF_OUT" --enable-gpl --enable-nonfree --enable-libx264 --enable-libx265 --enable-libvpx \
+    --enable-libfdk-aac --enable-libmp3lame
 checkExecutionStatus "configuration of ffmpeg" $?
 make -j $FF_CPU
 checkExecutionStatus "compilation of ffmpeg" $?
