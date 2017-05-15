@@ -5,7 +5,7 @@
 If you not want to compile ffmpeg on yourself, download a successful build from [https://ffmpeg.martin-riedl.de/build/](https://ffmpeg.martin-riedl.de/build/).
 
 ## Ffmpeg build for Mac OS X and Linux
-This repository builds ffmpeg, ffprobe and ffserver for Mac OSX using
+This repository builds ffmpeg, ffprobe and ffserver for Mac OSX and Linux using
 - build
     - [cmake 3.8.1](https://cmake.org/)
     - [pkg-config 0.29.2](https://www.freedesktop.org/wiki/Software/pkg-config/)
@@ -68,7 +68,7 @@ After the build you find the FF_ROOT folder a ffmpeg-VERSION-DATE.zip file with 
 Example
 ```
 export FF_ROOT=/Users/martinriedl/Downloads/ffmpeg
-export FF_VERSION=3.3
+export FF_VERSION=3.3.1
 export FF_CPU=2
 ./build.sh
 ```
