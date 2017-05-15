@@ -139,7 +139,7 @@ checkExecutionStatus "download of vpx" $?
 # build vpx
 tar -zxf vpx*
 cd libvpx*
-./configure --prefix="$FF_OUT"
+./configure --prefix="$FF_OUT" --disable-unit-tests
 checkExecutionStatus "configuration of vpx" $?
 make -j $FF_CPU
 checkExecutionStatus "compilation of vpx" $?
