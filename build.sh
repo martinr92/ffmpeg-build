@@ -32,7 +32,7 @@ function checkExecutionStatus {
 # set some paths and environment variables
 echo "use FF_ROOT = $FF_ROOT"
 export FF_SOURCE="$FF_ROOT/ffsource"
-mkdir "$FF_SOURCE"
+mkdir -p "$FF_SOURCE"
 checkExecutionStatus "create source directory" $?
 export FF_OUT="$FF_ROOT/ffout"
 mkdir "$FF_OUT"
