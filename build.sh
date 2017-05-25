@@ -71,6 +71,25 @@ checkExecutionStatus "installation of yasm" $?
 export PATH="$FF_OUT_YASM/bin:$PATH"
 endBlock yasm
 
+# download nasm
+startBlock nasm
+export FF_OUT_NASM="$FF_ROOT/nasm"
+cd "$FF_SOURCE"
+curl -O http://www.nasm.us/pub/nasm/releasebuilds/2.13.01/nasm-2.13.01.tar.gz
+checkExecutionStatus "download of nasm" $?
+
+# build nasm
+tar -zxf nasm-*
+cd nasm-*
+./configure --prefix="$FF_OUT_NASM"
+checkExecutionStatus "configuration of nasm" $?
+make -j $FF_CPU
+checkExecutionStatus "compilation of nasm" $?
+make install
+checkExecutionStatus "installation of nasm" $?
+export PATH="$FF_OUT_NASM/bin:$PATH"
+endBlock nasm
+
 # download cmake
 startBlock cmake
 export FF_CMAKE_VERSION=3.8.1

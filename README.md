@@ -8,6 +8,7 @@ If you not want to compile ffmpeg on yourself, download a successful build from 
 This repository builds ffmpeg, ffprobe and ffserver for Mac OSX and Linux using
 - build
     - [cmake 3.8.1](https://cmake.org/)
+    - [nasm 2.13.01](http://www.nasm.us/)
     - [pkg-config 0.29.2](https://www.freedesktop.org/wiki/Software/pkg-config/)
     - [YASM 1.3.0](http://yasm.tortall.net/)
 - video codec
