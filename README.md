@@ -18,6 +18,8 @@ This repository builds ffmpeg, ffprobe and ffserver for Mac OSX and Linux using
 - audio codec
     - [fdk-aac 0.1.5](https://sourceforge.net/projects/opencore-amr/) for AAC de/encoding
     - [LAME 3.99.5](http://lame.sourceforge.net/) for MP3 encoding
+- others
+    - [frei0r 1.6.1](https://frei0r.dyne.org/)
 
 ## Archive
 The created archive contains following data:

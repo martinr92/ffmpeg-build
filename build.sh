@@ -113,6 +113,23 @@ fi
 export PATH="$FF_OUT_CMAKE/bin:$PATH"
 endBlock cmake
 
+# download frei0r
+startBlock frei0r
+cd "$FF_SOURCE"
+curl -o frei0r.tar.gz -L https://github.com/dyne/frei0r/archive/v1.6.1.tar.gz
+checkExecutionStatus "download of frei0r" $?
+
+# build frei0r
+tar -zxf frei0r.tar.gz
+cd frei0r-*
+cmake -DCMAKE_INSTALL_PREFIX:PATH=$FF_OUT .
+checkExecutionStatus "configuration of frei0r" $?
+make -j $FF_CPU
+checkExecutionStatus "compilation of frei0r" $?
+make install
+checkExecutionStatus "installation of frei0r" $?
+endBlock frei0r
+
 # download x264
 startBlock x264
 cd "$FF_SOURCE"
@@ -232,7 +249,9 @@ export FF_FLAGS="-L${FF_OUT}/lib -I${FF_OUT}/include"
 export LDFLAGS="$FF_FLAGS"
 export CFLAGS="$FF_FLAGS"
 cd ffmpeg*
-./configure --prefix="$FF_OUT" --enable-gpl --enable-nonfree --enable-libx264 --enable-libx265 --enable-libvpx \
+./configure --prefix="$FF_OUT" --enable-gpl --enable-nonfree \
+    --enable-frei0r
+    --enable-libx264 --enable-libx265 --enable-libvpx \
     --enable-libfdk-aac --enable-libmp3lame
 checkExecutionStatus "configuration of ffmpeg" $?
 make -j $FF_CPU
