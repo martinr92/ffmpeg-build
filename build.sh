@@ -250,7 +250,7 @@ export LDFLAGS="$FF_FLAGS"
 export CFLAGS="$FF_FLAGS"
 cd ffmpeg*
 ./configure --prefix="$FF_OUT" --enable-gpl --enable-nonfree \
-    --enable-frei0r
+    --enable-frei0r \
     --enable-libx264 --enable-libx265 --enable-libvpx \
     --enable-libfdk-aac --enable-libmp3lame
 checkExecutionStatus "configuration of ffmpeg" $?
