@@ -265,7 +265,7 @@ cd "$FF_OUT/bin"
 ./ffmpeg -codecs > $FF_OUT/ffmpeg_codecs.txt 2> /dev/null
 ./ffmpeg -formats > $FF_OUT/ffmpeg_formats.txt 2> /dev/null
 echo "==================" > $FF_OUT/ffmpeg_info.txt
-echo "===   FFMPEG   ===" >> $FF_OUT/ffmpeg_info.txt
+echo "===   FFmpeg   ===" >> $FF_OUT/ffmpeg_info.txt
 echo "==================" >> $FF_OUT/ffmpeg_info.txt
 ./ffmpeg -version >> $FF_OUT/ffmpeg_info.txt
 echo "==================" >> $FF_OUT/ffmpeg_info.txt

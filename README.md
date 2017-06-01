@@ -1,4 +1,4 @@
-# Ffmpeg-build
+# FFmpeg-build
 [![Build Status](https://travis-ci.org/martinr92/ffmpeg-build.svg?branch=master)](https://travis-ci.org/martinr92/ffmpeg-build)
 
 ## Download
@@ -48,7 +48,7 @@ File formats:
 - ffmpeg_info.txt
 ```
 ==============
-=== FFMPEG ===
+=== FFmpeg ===
 ==============
 ffmpeg version x.x [...]
 ==============
