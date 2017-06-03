@@ -113,6 +113,23 @@ fi
 export PATH="$FF_OUT_CMAKE/bin:$PATH"
 endBlock cmake
 
+# sdl2 for ffplay
+startBlock sdl2
+cd "$FF_SOURCE"
+curl -O https://www.libsdl.org/release/SDL2-2.0.5.tar.gz
+checkExecutionStatus "download of sdl2" $?
+
+# build sdl2
+tar -zxf SDL2*
+cd SDL2-*
+./configure --prefix="$FF_OUT"
+checkExecutionStatus "configuration of sdl2" $?
+make -j $FF_CPU
+checkExecutionStatus "compilation of sdl2" $?
+make install
+checkExecutionStatus "installation of sdl2" $?
+endBlock sdl2
+
 # download frei0r
 startBlock frei0r
 cd "$FF_SOURCE"
