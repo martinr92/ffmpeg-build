@@ -5,7 +5,7 @@
 If you not want to compile ffmpeg on yourself, download a successful build from [https://ffmpeg.martin-riedl.de/build/](https://ffmpeg.martin-riedl.de/build/).
 
 ## FFmpeg build for Mac OS X and Linux
-This repository builds ffmpeg, ffprobe, ffserver and ffplay for Mac OSX and Linux using
+This repository builds ffmpeg, ffprobe and ffserver for Mac OSX and Linux using
 - build
     - [cmake 3.8.2](https://cmake.org/)
     - [nasm 2.13.01](http://www.nasm.us/)
@@ -20,7 +20,6 @@ This repository builds ffmpeg, ffprobe, ffserver and ffplay for Mac OSX and Linu
     - [LAME 3.99.5](http://lame.sourceforge.net/) for MP3 encoding
 - others
     - [frei0r 1.6.1](https://frei0r.dyne.org/)
-    - [SDL 2.0.5](https://www.libsdl.org/) for ffplay
 
 ## Archive
 The created archive contains following data:
