@@ -140,23 +140,6 @@ make install
 checkExecutionStatus "installation of frei0r" $?
 endBlock frei0r
 
-# download freetype
-startBlock freetype
-cd "$FF_SOURCE"
-curl -O -L http://download.savannah.gnu.org/releases/freetype/freetype-2.8.tar.gz
-checkExecutionStatus "download of freetype" $?
-
-# build freetype
-tar -zxf freetype*
-cd freetype-*
-./configure --prefix="$FF_OUT" --enable-shared=no
-checkExecutionStatus "configuration of freetype" $?
-make -j $FF_CPU
-checkExecutionStatus "compilation of freetype" $?
-make install
-checkExecutionStatus "installation of freetype" $?
-endBlock freetype
-
 # download x264
 startBlock x264
 cd "$FF_SOURCE"
@@ -277,7 +260,7 @@ export LDFLAGS="$FF_FLAGS"
 export CFLAGS="$FF_FLAGS"
 cd ffmpeg*
 ./configure --prefix="$FF_OUT" --enable-gpl --enable-nonfree \
-    --enable-frei0r --enable-libfreetype \
+    --enable-frei0r \
     --enable-libx264 --enable-libx265 --enable-libvpx \
     --enable-libfdk-aac --enable-libmp3lame
 checkExecutionStatus "configuration of ffmpeg" $?
