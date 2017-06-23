@@ -25,6 +25,16 @@ function checkExecutionStatus {
     if [ $2 -ne 0 ]
     then
         echo "ERROR in step '$1'"
+
+        # upload data
+        if [ "$TRAVIS" = "true" ]
+        then
+            cd "$FF_OUT"
+            zip -9 -r "$FF_ROOT/ffmpeg-$FF_VERSION.zip" *
+            remotePath=build/${TRAVIS_BRANCH}/${TRAVIS_OS_NAME}/${FF_VERSION}/ffmpeg-${FF_VERSION}_`date +%Y%m%d%H%M%S`_FAILED.zip
+            curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-$FF_VERSION.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/$remotePath
+        fi
+
         exit 1
     fi
 }
