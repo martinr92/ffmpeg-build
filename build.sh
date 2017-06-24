@@ -123,6 +123,25 @@ fi
 export PATH="$FF_OUT_CMAKE/bin:$PATH"
 endBlock cmake
 
+# download pkg-config
+startBlock pkg-config
+export FF_OUT_PKG_CONFIG="$FF_ROOT/pkg-config"
+cd "$FF_SOURCE"
+curl -O https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
+checkExecutionStatus "download of pkg-config" $?
+
+# build pkg-config
+tar -zxf pkg-config-*
+cd pkg-config-*
+./configure --prefix="$FF_OUT_PKG_CONFIG" --with-pc-path="$FF_OUT/lib/pkgconfig" --with-internal-glib
+checkExecutionStatus "configuration of pkg-config" $?
+make -j $FF_CPU
+checkExecutionStatus "compilation of pkg-config" $?
+make install
+checkExecutionStatus "installation of pkg-config" $?
+export PATH="$FF_OUT_PKG_CONFIG/bin:$PATH"
+endBlock pkg-config
+
 # download frei0r
 startBlock frei0r
 cd "$FF_SOURCE"
@@ -156,6 +175,24 @@ checkExecutionStatus "compilation of freetype" $?
 make install
 checkExecutionStatus "installation of freetype" $?
 endBlock freetype
+
+# download fontconfig
+startBlock fontconfig
+cd "$FF_SOURCE"
+# version 2.12.3 is not workling on linux --> use the latest working version
+curl -O https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.12.1.tar.gz
+checkExecutionStatus "download of fontconfig" $?
+
+# build fontconfig
+tar -zxf fontconfig*.tar.gz
+cd fontconfig-*
+./configure --prefix="$FF_OUT" --enable-static=yes --enable-shared=no
+checkExecutionStatus "configuration of fontconfig" $?
+make -j $FF_CPU
+checkExecutionStatus "compilation of fontconfig" $?
+make install
+checkExecutionStatus "installation of fontconfig" $?
+endBlock fontconfig
 
 # download x264
 startBlock x264
@@ -244,25 +281,6 @@ make install
 checkExecutionStatus "installation of lame-mp3" $?
 endBlock lame-mp3
 
-# download pkg-config
-startBlock pkg-config
-export FF_OUT_PKG_CONFIG="$FF_ROOT/pkg-config"
-cd "$FF_SOURCE"
-curl -O https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
-checkExecutionStatus "download of pkg-config" $?
-
-# build pkg-config
-tar -zxf pkg-config-*
-cd pkg-config-*
-./configure --prefix="$FF_OUT_PKG_CONFIG" --with-pc-path="$FF_OUT/lib/pkgconfig" --with-internal-glib
-checkExecutionStatus "configuration of pkg-config" $?
-make -j $FF_CPU
-checkExecutionStatus "compilation of pkg-config" $?
-make install
-checkExecutionStatus "installation of pkg-config" $?
-export PATH="$FF_OUT_PKG_CONFIG/bin:$PATH"
-endBlock pkg-config
-
 # download ffmpeg
 startBlock ffmpeg
 cd "$FF_SOURCE"
@@ -276,8 +294,8 @@ export FF_FLAGS="-L${FF_OUT}/lib -I${FF_OUT}/include"
 export LDFLAGS="$FF_FLAGS"
 export CFLAGS="$FF_FLAGS"
 cd ffmpeg*
-./configure --prefix="$FF_OUT" --enable-gpl --enable-nonfree \
-    --enable-frei0r --enable-libfreetype \
+./configure --prefix="$FF_OUT" --enable-gpl --enable-nonfree --pkg-config-flags="--static" \
+    --enable-frei0r --enable-libfontconfig --enable-libfreetype \
     --enable-libx264 --enable-libx265 --enable-libvpx \
     --enable-libfdk-aac --enable-libmp3lame
 checkExecutionStatus "configuration of ffmpeg" $?
