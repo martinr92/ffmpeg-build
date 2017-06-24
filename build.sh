@@ -27,7 +27,7 @@ function checkExecutionStatus {
         echo "ERROR in step '$1'"
 
         # upload data
-        if [ "$TRAVIS" = "true" ]
+        if [ "$TRAVIS" = "true" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]
         then
             cd "$FF_OUT"
             zip -9 -r "$FF_ROOT/ffmpeg-$FF_VERSION.zip" *
@@ -315,7 +315,7 @@ zip -9 -r "$FF_ROOT/ffmpeg-$FF_VERSION.zip" *
 endBlock zip-content
 
 # upload data
-if [ "$TRAVIS" = "true" ]
+if [ "$TRAVIS" = "true" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]
 then
     startBlock upload-ftp
     remotePath=build/${TRAVIS_BRANCH}/${TRAVIS_OS_NAME}/${FF_VERSION}/ffmpeg-${FF_VERSION}_`date +%Y%m%d%H%M%S`.zip
