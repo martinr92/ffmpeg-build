@@ -22,6 +22,7 @@ This repository builds ffmpeg, ffprobe and ffserver for Mac OSX and Linux using
     - [fontconfig 2.12.1](https://www.freedesktop.org/wiki/Software/fontconfig/)
     - [FreeType 2.8](https://www.freetype.org/)
     - [frei0r 1.6.1](https://frei0r.dyne.org/)
+    - [zlib 1.2.11](https://zlib.net/)
 
 ## Archive
 The created archive contains following data:

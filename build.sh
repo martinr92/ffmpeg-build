@@ -142,6 +142,23 @@ checkExecutionStatus "installation of pkg-config" $?
 export PATH="$FF_OUT_PKG_CONFIG/bin:$PATH"
 endBlock pkg-config
 
+# download zlib
+startBlock zlib
+cd "$FF_SOURCE"
+curl -O https://zlib.net/zlib-1.2.11.tar.gz
+checkExecutionStatus "download of zlib" $?
+
+# build zlib
+tar -zxf zlib*.tar.gz
+cd zlib-*
+./configure --prefix="$FF_OUT" --static
+checkExecutionStatus "configuration of zlib" $?
+make -j $FF_CPU
+checkExecutionStatus "compilation of zlib" $?
+make install
+checkExecutionStatus "installation of zlib" $?
+endBlock zlib
+
 # download frei0r
 startBlock frei0r
 cd "$FF_SOURCE"
@@ -168,7 +185,7 @@ checkExecutionStatus "download of freetype" $?
 # build freetype
 tar -zxf freetype*
 cd freetype-*
-./configure --prefix="$FF_OUT" --enable-shared=no --with-zlib=no --with-png=no
+./configure --prefix="$FF_OUT" --enable-shared=no --with-png=no
 checkExecutionStatus "configuration of freetype" $?
 make -j $FF_CPU
 checkExecutionStatus "compilation of freetype" $?
