@@ -353,9 +353,15 @@ endBlock zip-content
 if [ "$TRAVIS" = "true" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]
 then
     startBlock upload-ftp
-    remotePath=build/${TRAVIS_BRANCH}/${TRAVIS_OS_NAME}/${FF_VERSION}/ffmpeg-${FF_VERSION}_`date +%Y%m%d%H%M%S`.zip
-    curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-$FF_VERSION.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/$remotePath
-    remotePath=build/${TRAVIS_BRANCH}/${TRAVIS_OS_NAME}/${FF_VERSION}/ffmpeg-latest.zip
-    curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-$FF_VERSION.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/$remotePath
+    if [ "$TRAVIS_TAG" != "" ]
+    then
+        remotePath=build/${TRAVIS_BRANCH}/ffmpeg-build-${TRAVIS_OS_NAME}-${TRAVIS_TAG}.zip
+        curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-$FF_VERSION.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/$remotePath
+    else
+        remotePath=build/${TRAVIS_BRANCH}/${TRAVIS_OS_NAME}/${FF_VERSION}/ffmpeg-${FF_VERSION}_`date +%Y%m%d%H%M%S`.zip
+        curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-$FF_VERSION.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/$remotePath
+        remotePath=build/${TRAVIS_BRANCH}/${TRAVIS_OS_NAME}/${FF_VERSION}/ffmpeg-latest.zip
+        curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-$FF_VERSION.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/$remotePath
+    fi
     endBlock upload-ftp
 fi
