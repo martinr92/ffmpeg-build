@@ -232,7 +232,7 @@ endBlock x264
 # download x265
 startBlock x265
 cd "$FF_SOURCE"
-curl -O -L https://bitbucket.org/multicoreware/x265/downloads/x265_2.4.tar.gz
+curl -O -L https://bitbucket.org/multicoreware/x265/downloads/x265_2.5.tar.gz
 checkExecutionStatus "download of x265" $?
 
 # build x265
