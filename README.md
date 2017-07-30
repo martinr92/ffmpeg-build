@@ -64,7 +64,7 @@ x264 x.x.x [...]
 ## Execution
 Following environment variables must be set before executing:
 - FF_ROOT = empty directory for the whole content
-- FF_VERSION = ffmpeg version (e.g. 3.3.2 or snapshot)
+- FF_VERSION = ffmpeg version (e.g. 3.3.3 or snapshot)
 
 The following environment variables are optional:
 - FF_CPU = number of CPU threads (default: 1)
@@ -74,7 +74,7 @@ After the build you find the FF_ROOT folder a ffmpeg-VERSION-DATE.zip file with 
 Example
 ```
 export FF_ROOT=/Users/martinriedl/Downloads/ffmpeg
-export FF_VERSION=3.3.2
+export FF_VERSION=3.3.3
 export FF_CPU=2
 ./build.sh
 ```
