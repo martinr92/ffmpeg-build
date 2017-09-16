@@ -179,7 +179,7 @@ endBlock frei0r
 # download freetype
 startBlock freetype
 cd "$FF_SOURCE"
-curl -O -L http://download.savannah.gnu.org/releases/freetype/freetype-2.8.tar.gz
+curl -O -L https://netcologne.dl.sourceforge.net/project/freetype/freetype2/2.8.1/freetype-2.8.1.tar.gz
 checkExecutionStatus "download of freetype" $?
 
 # build freetype
