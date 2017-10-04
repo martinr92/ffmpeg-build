@@ -102,7 +102,7 @@ endBlock nasm
 
 # download cmake
 startBlock cmake
-export FF_CMAKE_VERSION=3.9.3
+export FF_CMAKE_VERSION=3.9.4
 export FF_OUT_CMAKE="$FF_ROOT/cmake/cmake-${FF_CMAKE_VERSION}"
 if [ ! -f $FF_OUT_CMAKE/bin/cmake ]
 then
