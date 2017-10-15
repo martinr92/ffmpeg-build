@@ -284,7 +284,7 @@ endBlock fdk-aac
 # download lame (mp3)
 startBlock lame-mp3
 cd "$FF_SOURCE"
-curl -O https://netcologne.dl.sourceforge.net/project/lame/lame/3.99/lame-3.99.5.tar.gz
+curl -O https://netcologne.dl.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz
 checkExecutionStatus "download of lame-mp3" $?
 
 # build lame
