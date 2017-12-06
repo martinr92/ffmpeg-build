@@ -71,7 +71,7 @@ checkExecutionStatus "download of yasm" $?
 
 # build yasm
 tar -zxf yasm-*
-cd yasm-*
+cd yasm-*/
 ./configure --enable-silent-rules --prefix="$FF_OUT_YASM"
 checkExecutionStatus "configuration of yasm" $?
 make -j $FF_CPU
@@ -90,7 +90,7 @@ checkExecutionStatus "download of nasm" $?
 
 # build nasm
 tar -zxf nasm-*
-cd nasm-*
+cd nasm-*/
 ./configure --prefix="$FF_OUT_NASM"
 checkExecutionStatus "configuration of nasm" $?
 make -j $FF_CPU
@@ -112,7 +112,7 @@ then
 
     # build cmake
     tar -zxf cmake-*
-    cd cmake-*
+    cd cmake-*/
     ./configure --prefix="$FF_OUT_CMAKE" --parallel=$FF_CPU
     checkExecutionStatus "configuration of cmake" $?
     make -j $FF_CPU
@@ -132,7 +132,7 @@ checkExecutionStatus "download of pkg-config" $?
 
 # build pkg-config
 tar -zxf pkg-config-*
-cd pkg-config-*
+cd pkg-config-*/
 ./configure --prefix="$FF_OUT_PKG_CONFIG" --with-pc-path="$FF_OUT/lib/pkgconfig" --with-internal-glib
 checkExecutionStatus "configuration of pkg-config" $?
 make -j $FF_CPU
@@ -150,7 +150,7 @@ checkExecutionStatus "download of zlib" $?
 
 # build zlib
 tar -zxf zlib*.tar.gz
-cd zlib-*
+cd zlib-*/
 ./configure --prefix="$FF_OUT" --static
 checkExecutionStatus "configuration of zlib" $?
 make -j $FF_CPU
@@ -167,7 +167,7 @@ checkExecutionStatus "download of frei0r" $?
 
 # build frei0r
 tar -zxf frei0r.tar.gz
-cd frei0r-*
+cd frei0r-*/
 cmake -DCMAKE_INSTALL_PREFIX:PATH=$FF_OUT .
 checkExecutionStatus "configuration of frei0r" $?
 make -j $FF_CPU
@@ -184,7 +184,7 @@ checkExecutionStatus "download of freetype" $?
 
 # build freetype
 tar -zxf freetype*
-cd freetype-*
+cd freetype-*/
 ./configure --prefix="$FF_OUT" --enable-shared=no --with-png=no
 checkExecutionStatus "configuration of freetype" $?
 make -j $FF_CPU
@@ -202,7 +202,7 @@ checkExecutionStatus "download of fontconfig" $?
 
 # build fontconfig
 tar -zxf fontconfig*.tar.gz
-cd fontconfig-*
+cd fontconfig-*/
 ./configure --prefix="$FF_OUT" --enable-static=yes --enable-shared=no
 checkExecutionStatus "configuration of fontconfig" $?
 make -j $FF_CPU
@@ -220,7 +220,7 @@ checkExecutionStatus "download of x264" $?
 # build x264
 bunzip2 last_x264.tar.bz2
 tar -xf last_x264.tar
-cd x264*
+cd x264*/
 ./configure --prefix="$FF_OUT" --enable-static
 checkExecutionStatus "configuration of x264" $?
 make -j $FF_CPU
@@ -237,7 +237,7 @@ checkExecutionStatus "download of x265" $?
 
 # build x265
 tar -zxf x265_*
-cd x265_*
+cd x265_*/
 cmake -DCMAKE_INSTALL_PREFIX:PATH=$FF_OUT -DENABLE_SHARED=NO source
 make -j $FF_CPU
 checkExecutionStatus "compilation of x265" $?
@@ -255,7 +255,7 @@ checkExecutionStatus "download of vpx" $?
 
 # build vpx
 tar -zxf vpx*
-cd libvpx*
+cd libvpx*/
 ./configure --prefix="$FF_OUT" --disable-unit-tests
 checkExecutionStatus "configuration of vpx" $?
 make -j $FF_CPU
@@ -272,7 +272,7 @@ checkExecutionStatus "download of fdk-aac" $?
 
 # build fdk-aac
 tar -zxf fdk-aac*
-cd fdk-aac*
+cd fdk-aac*/
 ./configure --prefix="$FF_OUT" --enable-shared=no
 checkExecutionStatus "configuration of fdk-aac" $?
 make -j $FF_CPU
@@ -289,7 +289,7 @@ checkExecutionStatus "download of lame-mp3" $?
 
 # build lame
 tar -zxf lame*
-cd lame*
+cd lame*/
 ./configure --prefix="$FF_OUT" --enable-shared=no
 checkExecutionStatus "configuration of lame-mp3" $?
 make -j $FF_CPU
@@ -310,7 +310,7 @@ tar -xf ffmpeg-$FF_VERSION.tar
 export FF_FLAGS="-L${FF_OUT}/lib -I${FF_OUT}/include"
 export LDFLAGS="$FF_FLAGS"
 export CFLAGS="$FF_FLAGS"
-cd ffmpeg*
+cd ffmpeg*/
 ./configure --prefix="$FF_OUT" --enable-gpl --enable-nonfree --pkg-config-flags="--static" \
     --enable-frei0r --enable-libfontconfig --enable-libfreetype \
     --enable-libx264 --enable-libx265 --enable-libvpx \
