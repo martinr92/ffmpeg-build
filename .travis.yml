@@ -4,7 +4,7 @@ os:
   - osx
   - linux
 
-env: FF_ROOT=$TRAVIS_BUILD_DIR FF_VERSION=3.4.1 FF_CPU=2
+env: FF_ROOT=$TRAVIS_BUILD_DIR FF_VERSION=3.4.2 FF_CPU=2
 
 cache:
   directories:
