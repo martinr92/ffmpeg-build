@@ -1,6 +1,6 @@
 # FFmpeg-build
-[![Build Status](https://travis-ci.org/martinr92/ffmpeg-build.svg?branch=v1.0.5)](https://travis-ci.org/martinr92/ffmpeg-build/branches)
-Last Release v1.0.5
+[![Build Status](https://travis-ci.org/martinr92/ffmpeg-build.svg?branch=v1.0.6)](https://travis-ci.org/martinr92/ffmpeg-build/branches)
+Last Release v1.0.6
 
 [![Build Status](https://travis-ci.org/martinr92/ffmpeg-build.svg?branch=master)](https://travis-ci.org/martinr92/ffmpeg-build)
 Last Build
