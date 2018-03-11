@@ -20,7 +20,7 @@ This repository builds ffmpeg, ffprobe and ffserver for Mac OSX and Linux using
     - [x265 2.7](http://x265.org/) for H.265/HEVC encoding
     - [vpx 1.6.1](https://www.webmproject.org/) for VP8/VP9 de/encoding
 - audio codec
-    - [fdk-aac 0.1.5](https://sourceforge.net/projects/opencore-amr/) for AAC de/encoding
+    - [fdk-aac 0.1.6](https://sourceforge.net/projects/opencore-amr/) for AAC de/encoding
     - [LAME 3.100](http://lame.sourceforge.net/) for MP3 encoding
 - others
     - [fontconfig 2.12.1](https://www.freedesktop.org/wiki/Software/fontconfig/)
