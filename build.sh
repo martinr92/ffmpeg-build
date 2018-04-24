@@ -85,7 +85,7 @@ endBlock yasm
 startBlock nasm
 export FF_OUT_NASM="$FF_ROOT/nasm"
 cd "$FF_SOURCE"
-curl -O http://www.nasm.us/pub/nasm/releasebuilds/2.13.01/nasm-2.13.01.tar.gz
+curl -O -L http://www.nasm.us/pub/nasm/releasebuilds/2.13.01/nasm-2.13.01.tar.gz
 checkExecutionStatus "download of nasm" $?
 
 # build nasm
