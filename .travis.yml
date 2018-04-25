@@ -10,4 +10,7 @@ cache:
   directories:
     - $FF_ROOT/cmake
 
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then apt-get update -q && apt-get install -y gcc-4.8; fi
+
 script: ./build.sh
