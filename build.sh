@@ -169,10 +169,10 @@ checkExecutionStatus "download of util-linux" $?
 tar -zxf util-linux*.tar.gz
 cd util-linux-*/
 # ipcrm and ipcs doesn't compile and wall doesn't install on OSX
-# mount installation on (linux)-buildserver is not allowed
+# mount and su installation on (linux)-buildserver is not allowed
 ./configure --prefix="$FF_OUT" --enable-shared=no \
     --disable-ipcrm --disable-ipcs --disable-wall \
-    --disable-mount
+    --disable-mount --disable-su
 checkExecutionStatus "configuration of util-linux" $?
 make -j $FF_CPU
 checkExecutionStatus "compilation of util-linux" $?
