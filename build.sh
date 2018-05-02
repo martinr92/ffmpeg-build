@@ -196,8 +196,7 @@ endBlock freetype
 # download fontconfig
 startBlock fontconfig
 cd "$FF_SOURCE"
-# version 2.12.3 is not workling on linux --> use the latest working version
-curl -O https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.12.1.tar.gz
+curl -O https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.13.0.tar.gz
 checkExecutionStatus "download of fontconfig" $?
 
 # build fontconfig
