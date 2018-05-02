@@ -5,6 +5,8 @@ function startBlock {
     if [ "$TRAVIS" = "true" ]
     then
         echo "travis_fold:start:$1"
+        export travis_start_time=$(date +%s)
+        echo "travis_time:start"
     fi
     echo "=== START $1 ==="
     date
@@ -16,6 +18,9 @@ function endBlock {
     echo "=== END $1 ==="
     if [ "$TRAVIS" = "true" ]
     then
+        travis_end_time=$(date +%s)
+        duration=$(($travis_end_time-$travis_start_time))
+        echo "travis_time:finish:start=$travis_start_time,finish=$travis_end_time,duration=$duration"
         echo "travis_fold:end:$1"
     fi
 }
