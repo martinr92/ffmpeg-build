@@ -4,10 +4,21 @@ os:
   - osx
   - linux
 
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-4.9
+      - g++-4.9
+
 env: FF_ROOT=$TRAVIS_BUILD_DIR FF_VERSION=3.4.2 FF_CPU=2
 
 cache:
   directories:
     - $FF_ROOT/cmake
+
+before_script:
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
 
 script: ./build.sh
