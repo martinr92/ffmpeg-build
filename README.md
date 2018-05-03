@@ -17,7 +17,7 @@ This repository builds ffmpeg, ffprobe and ffserver for Mac OSX and Linux using
     - [fdk-aac 0.1.6](https://sourceforge.net/projects/opencore-amr/) for AAC de/encoding
     - [LAME 3.100](http://lame.sourceforge.net/) for MP3 encoding
 - others
-    - [fontconfig 2.12.1](https://www.freedesktop.org/wiki/Software/fontconfig/)
+    - [fontconfig 2.13.0](https://www.freedesktop.org/wiki/Software/fontconfig/)
     - [FreeType 2.9.1](https://www.freetype.org/)
     - [frei0r 1.6.1](https://frei0r.dyne.org/)
     - [zlib 1.2.11](https://zlib.net/)

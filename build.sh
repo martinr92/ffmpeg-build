@@ -175,6 +175,27 @@ make install
 checkExecutionStatus "installation of zlib" $?
 endBlock zlib
 
+# download util-linux (used for fontconfig)
+startBlock util-linux
+cd "$FF_SOURCE"
+curl -O https://mirrors.edge.kernel.org/pub/linux/utils/util-linux/v2.32/util-linux-2.32.tar.gz
+checkExecutionStatus "download of util-linux" $?
+
+# build util-linux
+tar -zxf util-linux*.tar.gz
+cd util-linux-*/
+# ipcrm and ipcs doesn't compile and wall doesn't install on OSX
+# mount and su installation on (linux)-buildserver is not allowed
+./configure --prefix="$FF_OUT" --enable-shared=no \
+    --disable-ipcrm --disable-ipcs --disable-wall \
+    --disable-mount --disable-su
+checkExecutionStatus "configuration of util-linux" $?
+make -j $FF_CPU
+checkExecutionStatus "compilation of util-linux" $?
+make install
+checkExecutionStatus "installation of util-linux" $?
+endBlock util-linux
+
 # download frei0r
 startBlock frei0r
 cd "$FF_SOURCE"
@@ -212,8 +233,7 @@ endBlock freetype
 # download fontconfig
 startBlock fontconfig
 cd "$FF_SOURCE"
-# version 2.12.3 is not workling on linux --> use the latest working version
-curl -O https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.12.1.tar.gz
+curl -O https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.13.0.tar.gz
 checkExecutionStatus "download of fontconfig" $?
 
 # build fontconfig
