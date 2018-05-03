@@ -12,7 +12,7 @@ addons:
       - gcc-4.9
       - g++-4.9
 
-env: FF_ROOT=$TRAVIS_BUILD_DIR FF_VERSION=4.0FF_CPU=2
+env: FF_ROOT=$TRAVIS_BUILD_DIR FF_VERSION=4.0 FF_CPU=2
 
 cache:
   directories:
