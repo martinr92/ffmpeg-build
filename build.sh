@@ -6,7 +6,7 @@ function startBlock {
     then
         echo "travis_fold:start:$1"
         export travis_time_id=$(printf %08x $(( RANDOM * RANDOM )))
-        export travis_start_time=currentTimeInNanos
+        export travis_start_time=$(currentTimeInNanos)
         echo "travis_time:start:$travis_time_id"
     fi
     echo "=== START $1 ==="
@@ -19,7 +19,7 @@ function endBlock {
     echo "=== END $1 ==="
     if [ "$TRAVIS" = "true" ]
     then
-        travis_end_time=currentTimeInNanos
+        travis_end_time=$(currentTimeInNanos)
         duration=$(($travis_end_time-$travis_start_time))
         echo "travis_time:end:$travis_time_id:start=$travis_start_time,finish=$travis_end_time,duration=$duration"
         echo "travis_fold:end:$1"
@@ -30,9 +30,9 @@ function endBlock {
 function currentTimeInNanos {
     if [ "$TRAVIS_OS_NAME" = "osx" ]
     then
-        return $(gdate +%s%N)
+        echo $(gdate +%s%N)
     else
-        return $(date +%s%N)
+        echo $(date +%s%N)
     fi
 }
 
