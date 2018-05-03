@@ -1,10 +1,4 @@
 # FFmpeg-build
-[![Build Status](https://travis-ci.org/martinr92/ffmpeg-build.svg?branch=v1.0.6)](https://travis-ci.org/martinr92/ffmpeg-build/branches)
-Last Release v1.0.6
-
-[![Build Status](https://travis-ci.org/martinr92/ffmpeg-build.svg?branch=master)](https://travis-ci.org/martinr92/ffmpeg-build)
-Last Build
-
 ## Download
 If you not want to compile ffmpeg on yourself, download a successful build from [https://ffmpeg.martin-riedl.de/build/](https://ffmpeg.martin-riedl.de/build/).
 
