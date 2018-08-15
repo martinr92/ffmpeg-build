@@ -1,6 +1,7 @@
 # FFmpeg-build
 ## Download
-If you not want to compile ffmpeg on yourself, download a successful build from [https://ffmpeg.martin-riedl.de/build/](https://ffmpeg.martin-riedl.de/build/).
+Download the latest release directly from [GitHub](https://github.com/martinr92/ffmpeg-build/releases).
+All builds are also availabe in my archive [https://ffmpeg.martin-riedl.de/build/](https://ffmpeg.martin-riedl.de/build/).
 
 ## FFmpeg build for Mac OS X and Linux
 This repository builds ffmpeg, ffprobe and ffserver for Mac OSX and Linux using
