@@ -260,7 +260,7 @@ checkExecutionStatus "compilation of x265" $?
 make install
 checkExecutionStatus "installation of x265" $?
 # https://mailman.videolan.org/pipermail/x265-devel/2014-April/004227.html
-sed -i -e 's/lx265/lx265 -lstdc++/g' $FF_OUT/lib/pkgconfig/x265.pc
+sed -i -e 's/lx265/lx265 -lstdc++ -lpthread/g' $FF_OUT/lib/pkgconfig/x265.pc
 endBlock x265
 
 # download vpx
