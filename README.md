@@ -6,7 +6,7 @@ All builds are also availabe in my archive [https://ffmpeg.martin-riedl.de/build
 ## FFmpeg build for Mac OS X and Linux
 This repository builds ffmpeg, ffprobe and ffserver for Mac OSX and Linux using
 - build
-    - [cmake 3.11.1](https://cmake.org/)
+    - [cmake 3.12.0](https://cmake.org/)
     - [nasm 2.13.01](http://www.nasm.us/)
     - [pkg-config 0.29.2](https://www.freedesktop.org/wiki/Software/pkg-config/)
     - [YASM 1.3.0](http://yasm.tortall.net/)
