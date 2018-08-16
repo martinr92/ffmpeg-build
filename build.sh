@@ -135,6 +135,15 @@ then
     checkExecutionStatus "compilation of cmake" $?
     make install
     checkExecutionStatus "installation of cmake" $?
+
+    # quit the script here to store the build results into the cache.
+    # a second run is necessary.
+    # https://github.com/travis-ci/travis-ci/issues/6410
+    if [ "$TRAVIS" = "true" ]
+    then
+        echo "quit to trigger travis cache"
+        exit 1
+    fi
 fi
 export PATH="$FF_OUT_CMAKE/bin:$PATH"
 endBlock cmake
