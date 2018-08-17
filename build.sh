@@ -122,6 +122,13 @@ export FF_CMAKE_VERSION=3.12.0
 export FF_OUT_CMAKE="$FF_ROOT/cmake/cmake-${FF_CMAKE_VERSION}"
 if [ ! -f $FF_OUT_CMAKE/bin/cmake ]
 then
+    # remove old cmake versions
+    if [ "$TRAVIS" = "true" ]
+    then
+        rm -R -f "$FF_ROOT/cmake/cmake*"
+    fi
+
+    # download latest cmake release
     cd "$FF_SOURCE"
     curl -O https://cmake.org/files/v3.12/cmake-${FF_CMAKE_VERSION}.tar.gz
     checkExecutionStatus "download of cmake" $?
