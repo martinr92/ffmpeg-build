@@ -12,7 +12,7 @@ This repository builds ffmpeg, ffprobe and ffserver for Mac OSX and Linux using
     - [YASM 1.3.0](http://yasm.tortall.net/)
 - video codec
     - [x264](http://www.videolan.org/developers/x264.html) for H.264 encoding
-    - [x265 2.7](http://x265.org/) for H.265/HEVC encoding
+    - [x265 2.8](http://x265.org/) for H.265/HEVC encoding
     - [vpx 1.6.1](https://www.webmproject.org/) for VP8/VP9 de/encoding
 - audio codec
     - [fdk-aac 0.1.6](https://sourceforge.net/projects/opencore-amr/) for AAC de/encoding
