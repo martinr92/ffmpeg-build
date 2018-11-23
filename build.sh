@@ -273,7 +273,7 @@ curl -O https://github.com/mirror/x264/archive/master.tar.gz
 checkExecutionStatus "download of x264" $?
 
 # build x264
-tar -zxf master.tar.gz
+tar -zxf x264*.tar.gz
 cd x264*/
 ./configure --prefix="$FF_OUT" --enable-static
 checkExecutionStatus "configuration of x264" $?
