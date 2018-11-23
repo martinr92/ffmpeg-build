@@ -266,6 +266,29 @@ make install
 checkExecutionStatus "installation of fontconfig" $?
 endBlock fontconfig
 
+# clone and checkout aom
+startBlock aom
+cd "$FF_SOURCE"
+mkdir aom
+cd aom
+git clone https://aomedia.googlesource.com/aom
+checkExecutionStatus "clone aom" $?
+cd aom
+git checkout tags/v1.0.0
+checkExecutionStatus "checkout aom" $?
+
+# build aom
+rm -rf CMakeCache.txt CMakeFiles
+mkdir -p ../aom_build
+cd ../aom_build
+cmake -DCMAKE_INSTALL_PREFIX:PATH=$FF_OUT ../aom/
+checkExecutionStatus "configuration of aom" $?
+make -j $FF_CPU
+checkExecutionStatus "compilation of aom" $?
+make install
+checkExecutionStatus "installation of aom" $?
+endBlock aom
+
 # download x264
 startBlock x264
 cd "$FF_SOURCE"
@@ -367,7 +390,7 @@ export CFLAGS="$FF_FLAGS"
 cd ffmpeg*/
 ./configure --prefix="$FF_OUT" --enable-gpl --enable-nonfree --pkg-config-flags="--static" \
     --enable-frei0r --enable-libfontconfig --enable-libfreetype \
-    --enable-libx264 --enable-libx265 --enable-libvpx \
+    --enable-libaom --enable-libx264 --enable-libx265 --enable-libvpx \
     --enable-libfdk-aac --enable-libmp3lame
 checkExecutionStatus "configuration of ffmpeg" $?
 make -j $FF_CPU
