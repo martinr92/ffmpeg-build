@@ -269,12 +269,11 @@ endBlock fontconfig
 # download x264
 startBlock x264
 cd "$FF_SOURCE"
-curl -O ftp://ftp.videolan.org/pub/x264/snapshots/last_x264.tar.bz2
+curl -O https://github.com/mirror/x264/archive/master.tar.gz
 checkExecutionStatus "download of x264" $?
 
 # build x264
-bunzip2 last_x264.tar.bz2
-tar -xf last_x264.tar
+tar -zxf master.tar.gz
 cd x264*/
 ./configure --prefix="$FF_OUT" --enable-static
 checkExecutionStatus "configuration of x264" $?
