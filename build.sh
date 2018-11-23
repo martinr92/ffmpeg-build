@@ -46,9 +46,12 @@ function checkExecutionStatus {
         if [ "$TRAVIS" = "true" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]
         then
             cd "$FF_OUT"
-            zip -9 -r "$FF_ROOT/ffmpeg-$FF_VERSION.zip" *
-            remotePath=build/${TRAVIS_BRANCH}/${TRAVIS_OS_NAME}/${FF_VERSION}/ffmpeg-${FF_VERSION}_`date +%Y%m%d%H%M%S`_FAILED.zip
-            curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-$FF_VERSION.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/$remotePath
+            remoteName="ffmpeg-${FF_VERSION}_`date +%Y%m%d%H%M%S`_FAILED.zip"
+            zip -9 -r "$FF_ROOT/${remoteName}" *
+            curl -H "Content-Type: multipart/form-data" \
+                -H "target: build/${TRAVIS_BRANCH}/${TRAVIS_OS_NAME}/${FF_VERSION}/" \
+                -F "file=@${FF_ROOT}/${remoteName}" \
+                --user ${UPLOAD_CREDENTIALS} https://${UPLOAD_SERVER}/upload
         fi
 
         exit 1
@@ -266,12 +269,11 @@ endBlock fontconfig
 # download x264
 startBlock x264
 cd "$FF_SOURCE"
-curl -O ftp://ftp.videolan.org/pub/x264/snapshots/last_x264.tar.bz2
+curl -o x264-master.tar.gz -O -L https://github.com/mirror/x264/archive/master.tar.gz
 checkExecutionStatus "download of x264" $?
 
 # build x264
-bunzip2 last_x264.tar.bz2
-tar -xf last_x264.tar
+tar -zxf x264*.tar.gz
 cd x264*/
 ./configure --prefix="$FF_OUT" --enable-static
 checkExecutionStatus "configuration of x264" $?
@@ -407,13 +409,26 @@ then
     startBlock upload-ftp
     if [ "$TRAVIS_TAG" != "" ]
     then
-        remotePath=build/${TRAVIS_BRANCH}/ffmpeg-build-${TRAVIS_OS_NAME}-${TRAVIS_TAG}.zip
-        curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-$FF_VERSION.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/$remotePath
+        remoteName="ffmpeg-build-${TRAVIS_OS_NAME}-${TRAVIS_TAG}.zip"
+        cp "$FF_ROOT/ffmpeg-${FF_VERSION}.zip" "${FF_ROOT}/${remoteName}"
+        curl -H "Content-Type: multipart/form-data" \
+            -H "target: build/${TRAVIS_TAG}/" \
+            -F "file=@${FF_ROOT}/${remoteName}" \
+            --user ${UPLOAD_CREDENTIALS} https://${UPLOAD_SERVER}/upload
     else
-        remotePath=build/${TRAVIS_BRANCH}/${TRAVIS_OS_NAME}/${FF_VERSION}/ffmpeg-${FF_VERSION}_`date +%Y%m%d%H%M%S`.zip
-        curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-$FF_VERSION.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/$remotePath
-        remotePath=build/${TRAVIS_BRANCH}/${TRAVIS_OS_NAME}/${FF_VERSION}/ffmpeg-latest.zip
-        curl --ftp-create-dirs -T "$FF_ROOT/ffmpeg-$FF_VERSION.zip" -u $FTP_USER:$FTP_PASS ftp://$FTP_SERVER/$remotePath
+        remoteName="ffmpeg-${FF_VERSION}_`date +%Y%m%d%H%M%S`.zip"
+        cp "$FF_ROOT/ffmpeg-${FF_VERSION}.zip" "${FF_ROOT}/${remoteName}"
+        curl -H "Content-Type: multipart/form-data" \
+            -H "target: build/${TRAVIS_BRANCH}/${TRAVIS_OS_NAME}/${FF_VERSION}/" \
+            -F "file=@${FF_ROOT}/${remoteName}" \
+            --user ${UPLOAD_CREDENTIALS} https://${UPLOAD_SERVER}/upload
+
+        remoteName="ffmpeg-latest.zip"
+        cp "$FF_ROOT/ffmpeg-${FF_VERSION}.zip" "${FF_ROOT}/${remoteName}"
+        curl -H "Content-Type: multipart/form-data" \
+            -H "target: build/${TRAVIS_BRANCH}/${TRAVIS_OS_NAME}/${FF_VERSION}/" \
+            -F "file=@${FF_ROOT}/${remoteName}" \
+            --user ${UPLOAD_CREDENTIALS} https://${UPLOAD_SERVER}/upload
     fi
     endBlock upload-ftp
 fi
