@@ -269,7 +269,7 @@ endBlock fontconfig
 # download x264
 startBlock x264
 cd "$FF_SOURCE"
-curl -O https://github.com/mirror/x264/archive/master.tar.gz
+curl -o x264-master.tar.gz -O -L https://github.com/mirror/x264/archive/master.tar.gz
 checkExecutionStatus "download of x264" $?
 
 # build x264
