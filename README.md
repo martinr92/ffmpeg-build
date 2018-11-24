@@ -73,7 +73,7 @@ After the build you find the FF_ROOT folder a ffmpeg-VERSION-DATE.zip file with 
 Example
 ```
 export FF_ROOT=/Users/martin/Downloads/ffmpeg
-export FF_VERSION=4.0.2
+export FF_VERSION=4.0.3
 export FF_CPU=2
 ./build.sh
 ```
