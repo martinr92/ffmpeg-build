@@ -5,16 +5,16 @@ All builds are also availabe in my archive [https://ffmpeg.martin-riedl.de/build
 
 ## FFmpeg build for Mac OS X and Linux
 This repository builds ffmpeg, ffprobe and ffserver for Mac OSX and Linux using
-- build
+- build tools
     - [cmake 3.12.4](https://cmake.org/)
     - [nasm 2.13.03](http://www.nasm.us/)
     - [pkg-config 0.29.2](https://www.freedesktop.org/wiki/Software/pkg-config/)
     - [YASM 1.3.0](http://yasm.tortall.net/)
-- video codec
+- video codecs
     - [x264](http://www.videolan.org/developers/x264.html) for H.264 encoding
     - [x265 2.9](http://x265.org/) for H.265/HEVC encoding
     - [vpx 1.7.0](https://www.webmproject.org/) for VP8/VP9 de/encoding
-- audio codec
+- audio codecs
     - [fdk-aac 0.1.6](https://sourceforge.net/projects/opencore-amr/) for AAC de/encoding
     - [LAME 3.100](http://lame.sourceforge.net/) for MP3 encoding
 - others
@@ -63,7 +63,7 @@ x264 x.x.x [...]
 ## Execution
 Following environment variables must be set before executing:
 - FF_ROOT = empty directory for the whole content
-- FF_VERSION = ffmpeg version (e.g. 4.0.2 or snapshot)
+- FF_VERSION = ffmpeg version (e.g. 4.0.3 or snapshot)
 
 The following environment variables are optional:
 - FF_CPU = number of CPU threads (default: 1)
