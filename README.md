@@ -11,6 +11,7 @@ This repository builds ffmpeg, ffprobe and ffserver for Mac OSX and Linux using
     - [pkg-config 0.29.2](https://www.freedesktop.org/wiki/Software/pkg-config/)
     - [YASM 1.3.0](http://yasm.tortall.net/)
 - video codecs
+    - [aom 1.0.0](https://aomedia.org/) for AV1 de/encoding 
     - [x264](http://www.videolan.org/developers/x264.html) for H.264 encoding
     - [x265 2.9](http://x265.org/) for H.265/HEVC encoding
     - [vpx 1.7.0](https://www.webmproject.org/) for VP8/VP9 de/encoding
