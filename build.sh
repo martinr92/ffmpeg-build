@@ -235,7 +235,7 @@ endBlock frei0r
 # download freetype
 startBlock freetype
 cd "$FF_SOURCE"
-curl -O -L https://netcologne.dl.sourceforge.net/project/freetype/freetype2/2.9.1/freetype-2.9.1.tar.gz
+curl -O -L https://netcologne.dl.sourceforge.net/project/freetype/freetype2/2.10.0/freetype-2.10.0.tar.gz
 checkExecutionStatus "download of freetype" $?
 
 # build freetype
