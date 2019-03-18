@@ -14,7 +14,7 @@ This repository builds ffmpeg, ffprobe and ffserver for Mac OSX and Linux using
     - [aom 1.0.0](https://aomedia.org/) for AV1 de/encoding 
     - [x264](http://www.videolan.org/developers/x264.html) for H.264 encoding
     - [x265 2.9](http://x265.org/) for H.265/HEVC encoding
-    - [vpx 1.7.0](https://www.webmproject.org/) for VP8/VP9 de/encoding
+    - [vpx 1.8.0](https://www.webmproject.org/) for VP8/VP9 de/encoding
 - audio codecs
     - [fdk-aac 0.1.6](https://sourceforge.net/projects/opencore-amr/) for AAC de/encoding
     - [LAME 3.100](http://lame.sourceforge.net/) for MP3 encoding

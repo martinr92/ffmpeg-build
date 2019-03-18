@@ -327,7 +327,7 @@ endBlock x265
 # download vpx
 startBlock vpx
 cd "$FF_SOURCE"
-curl -o vpx.tar.gz -L https://github.com/webmproject/libvpx/archive/v1.7.0.tar.gz
+curl -o vpx.tar.gz -L https://github.com/webmproject/libvpx/archive/v1.8.0.tar.gz
 checkExecutionStatus "download of vpx" $?
 
 # build vpx
