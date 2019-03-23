@@ -344,7 +344,7 @@ endBlock vpx
 # download fdk-aac
 startBlock fdk-aac
 cd "$FF_SOURCE"
-curl -O -L https://netcologne.dl.sourceforge.net/project/opencore-amr/fdk-aac/fdk-aac-0.1.6.tar.gz
+curl -O -L https://netcologne.dl.sourceforge.net/project/opencore-amr/fdk-aac/fdk-aac-2.0.0.tar.gz
 checkExecutionStatus "download of fdk-aac" $?
 
 # build fdk-aac
